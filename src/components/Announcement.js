@@ -17,6 +17,8 @@ const GET_ANNOUNCEMENTS = gql`
 }
 `;
 
+
+
 export default function Announcement() {
   const { data, loading, error } = useQuery(GET_ANNOUNCEMENTS);
 
