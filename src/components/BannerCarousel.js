@@ -1,46 +1,90 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useQuery, gql } from '@apollo/client';
-
-const GET_BANNERS = gql`
-  query {
-    banners_connection {
-      nodes {
-        banner_item {
-          id
-          Title
-          description
-          buttonTitle
-          buttonUrl
-          Image {
-            url
-          }
-        }
-      }
-    }
-  }
-`;
 
 export default function BannerCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const { data, loading, error } = useQuery(GET_BANNERS);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const baseApiUrl = process.env.NEXT_PUBLIC_GRAPHQL_API_URL;
+  const baseApiUrl = process.env.NEXT_PUBLIC_GRAPHQL_API_URL || 'http://localhost:1337/graphql';
+  const baseAssetUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337'; // For constructing full image URLs
 
-  const banners =
-    data?.banners_connection?.nodes?.[0]?.banner_item?.map((item) => {
-      let imageUrl = '';
-      if (baseApiUrl && item.Image?.url) {
+  useEffect(() => {
+    const GET_BANNERS_QUERY = `
+      query Query {
+        banners_connection {
+          nodes {
+            title
+            description
+            order
+            image {
+              url
+            }
+            buttonTitle
+            buttonUrl
+            isActive
+          }
+        }
+      }
+    `;
+
+    const fetchBanners = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await fetch(baseApiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            query: GET_BANNERS_QUERY,
+          }),
+          // For client-side fetch, next: { revalidate } is not applicable directly here
+          // This would be for server-side fetch in Next.js Server Components
+        });
+
+        if (!response.ok) {
+          const errorBody = await response.text();
+          throw new Error(`HTTP error! status: ${response.status}, details: ${errorBody}`);
+        }
+
+        const json = await response.json();
+
+        if (json.errors) {
+          throw new Error(`GraphQL Errors: ${JSON.stringify(json.errors)}`);
+        }
+
+        setData(json.data);
+      } catch (err) {
+        console.error("Error fetching banners:", err);
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBanners();
+  }, [baseApiUrl]); // Re-run if baseApiUrl changes (though typically it's static)
+
+  const banners = data?.banners_connection?.nodes
+    ?.filter((item) => item.isActive)
+    ?.map((item) => {
+      let imageUrl = "";
+      if (baseAssetUrl && item.image?.url) {
         try {
-          imageUrl = new URL(item.Image.url, baseApiUrl).href;
+          // Construct full URL using the baseAssetUrl (your Strapi instance base URL)
+          // Strapi often returns /uploads/image.png, so we prepend the base URL
+          imageUrl = new URL(item.image.url, baseAssetUrl).href;
         } catch (e) {
-          console.error('Error constructing banner image URL:', e);
+          console.error("Error constructing banner image URL:", e);
         }
       }
 
       return {
-        id: item.id,
-        title: item.Title,
+        id: item.id, // Assuming 'id' exists in your Strapi data
+        title: item.title,
         description: item.description,
         buttonText: item.buttonTitle,
         buttonUrl: item.buttonUrl,
@@ -49,7 +93,7 @@ export default function BannerCarousel() {
     }) || [];
 
   useEffect(() => {
-    if (banners.length <= 1) return;
+    if (banners.length <= 1) return; // No need for carousel if 0 or 1 banner
     const interval = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % banners.length);
     }, 5000);

@@ -1,29 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePathname, useRouter } from 'next/navigation';
-import { useQuery, gql } from '@apollo/client';
-
-const GET_NAVIGATION_ITEMS = gql`
-  query GetNavigationItems {
-    navbars_connection {
-      nodes {
-        documentId
-        locale
-        navbar_item {
-          id
-          Title
-          url
-          order
-          attachment {
-            previewUrl
-          }
-          enums
-          isVisible
-        }
-      }
-    }
-  }
-`;
 
 export default function Navbar({ locale }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -32,20 +9,94 @@ export default function Navbar({ locale }) {
     const pathname = usePathname();
     const router = useRouter();
 
-    const { data, loading, error } = useQuery(GET_NAVIGATION_ITEMS);
+    // State for managing fetched data, loading, and error
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const graphqlApiUrl = process.env.NEXT_PUBLIC_GRAPHQL_API_URL || 'http://localhost:1337/graphql';
+
+    useEffect(() => {
+        const GET_NAVIGATION_ITEMS_QUERY = `
+            query GetNavigationItems {
+                navbars_connection {
+                    nodes {
+                        documentId
+                        locale
+                        navbar_item {
+                            id
+                            Title
+                            url
+                            order
+                            attachment {
+                                previewUrl
+                            }
+                            enums
+                            isVisible
+                        }
+                    }
+                }
+            }
+        `;
+
+        const fetchNavigationItems = async () => {
+            setLoading(true);
+            setError(null);
+            try {
+                const response = await fetch(graphqlApiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: GET_NAVIGATION_ITEMS_QUERY,
+                    }),
+                });
+
+                if (!response.ok) {
+                    const errorBody = await response.text();
+                    throw new Error(`HTTP error! status: ${response.status}, details: ${errorBody}`);
+                }
+
+                const json = await response.json();
+
+                if (json.errors) {
+                    throw new Error(`GraphQL Errors: ${JSON.stringify(json.errors)}`);
+                }
+
+                setData(json.data);
+            } catch (err) {
+                console.error("Error fetching navigation items:", err);
+                setError(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchNavigationItems();
+    }, [graphqlApiUrl]);
 
     const handleLanguageChange = (newLocale) => {
         const currentPathSegments = pathname.split('/');
+        // Find the index of the current locale in the path segments
         const localeIndex = currentPathSegments.indexOf(locale);
+
         if (localeIndex !== -1) {
+            // Replace the existing locale with the new one
             currentPathSegments[localeIndex] = newLocale;
         } else {
+            // If locale is not found (e.g., initial load on root without locale),
+            // insert it right after the first segment (which is usually empty for root '/')
             currentPathSegments.splice(1, 0, newLocale);
         }
         router.push(currentPathSegments.join('/'));
     };
 
-    console.log(data);
+    const navigationItems = data?.navbars_connection?.nodes
+        ?.find(nav => nav.locale === locale)
+        ?.navbar_item
+        ?.filter(item => item.isVisible)
+        ?.sort((a, b) => (a.order || 0) - (b.order || 0)) || [];
 
     return (
         <>
@@ -60,13 +111,15 @@ export default function Navbar({ locale }) {
                 </header>
             )}
             {!loading && !error && (
-                <header className="bg-slate-700 text-white py-4 px-6 flex items-center justify-between relative z-20">
+                <header className="bg-slate-700 text-white py-2 px-2 flex items-center justify-between relative z-20">
                     <div className="flex items-center space-x-4">
-                        <img
-                            src="https://api.bhu.edu.in/uploads/logo_big_3_small_843dd9d936.png"
-                            alt="BHU Logo"
-                            className="h-20"
-                        />
+                        <a href="/">
+                            <img
+                                src="https://api.bhu.edu.in/uploads/logo_big_3_small_843dd9d936.png"
+                                alt="BHU Logo"
+                                className="h-20"
+                            />
+                        </a>
                     </div>
 
                     <nav className="md:flex space-x-6 text-lg font-medium">
@@ -74,7 +127,8 @@ export default function Navbar({ locale }) {
                             <a
                                 key={link.id}
                                 href={link.url}
-                                target={link.enums === "external" ? "_blank" : ""}
+                                target={link.enums === "external" ? "_blank" : undefined}
+                                rel={link.enums === "external" ? "noopener noreferrer" : undefined}
                                 className=" hover:text-bhuOrange hover:scale-110 transition-colors duration-200"
                             >
                                 {link.Title}
@@ -83,9 +137,9 @@ export default function Navbar({ locale }) {
                         <div className=" hover:scale-110 ">
                             <select
                                 id="language-select-desktop"
-                                className=" mobile-nav-link rounded-md bg-slate-700 text-white appearance-none cursor-pointer text-lg  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+                                className="mobile-nav-link rounded-md bg-slate-700 text-white appearance-none cursor-pointer text-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
                                 onChange={(e) => handleLanguageChange(e.target.value)}
-                                defaultValue={locale}
+                                value={locale}
                             >
                                 <option value="en">English</option>
                                 <option value="hi">Hindi</option>
@@ -115,7 +169,8 @@ export default function Navbar({ locale }) {
                                     key={`mobile-${link.id}`}
                                     onClick={toggleMenu}
                                     href={link.url}
-                                    target={link.enum === "external" ? "_blank" : ""}
+                                    target={link.enums === "external" ? "_blank" : undefined}
+                                    rel={link.enums === "external" ? "noopener noreferrer" : undefined}
                                     className="text-white hover:underline hover:text-bhuOrange transition-colors duration-200"
                                 >
                                     {link.Title}
@@ -126,7 +181,7 @@ export default function Navbar({ locale }) {
                                     id="language-select-mobile"
                                     className="custom-select mobile-nav-link rounded-md bg-slate-700 text-white p-2 appearance-none cursor-pointer"
                                     onChange={(e) => handleLanguageChange(e.target.value)}
-                                    defaultValue={locale}
+                                    value={locale}
                                 >
                                     <option value="en">English</option>
                                     <option value="hi">Hindi</option>
@@ -134,7 +189,6 @@ export default function Navbar({ locale }) {
                             </div>
                         </div>
                     )}
-                    
                 </header>
             )}
         </>

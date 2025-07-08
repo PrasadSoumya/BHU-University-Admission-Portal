@@ -1,6 +1,6 @@
-// tailwind.config.js
+// tailwind.config.mjs
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default { // <--- Changed from module.exports to export default
   content: [
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        bhuBlue: '#1E3A8A', // 👈 use actual hex code or fix typo if slate-700
+        bhuBlue: '#1E3A8A', // Assuming this is the correct hex code
         bhuOrange: '#FF6F00',
         bhuGrey: '#6D6E70'
       },
@@ -22,11 +22,21 @@ module.exports = {
       },
       animation: {
         'fade-in': 'fadeIn 2s ease-out forwards',
+        'marquee': "marquee 10s linear infinite",
+        'marquee-reverse': "marquee-reverse 10s linear infinite", // If you want this, add it here
       },
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
+        },
+        marquee: { // <--- UNCOMMENTED
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
+        marqueeReverse: { // <--- ADDED if you need reverse (adjust animation name above too)
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
         },
       }
     },
