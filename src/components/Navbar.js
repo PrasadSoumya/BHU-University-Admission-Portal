@@ -47,8 +47,8 @@ export default function Navbar({ locale }) {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
+                        'Authorization': 'Bearer ' + process.env.NEXT_PUBLIC_STRAPI_TOKEN
+                    }, body: JSON.stringify({
                         query: GET_NAVIGATION_ITEMS_QUERY,
                     }),
                 });

@@ -37,6 +37,7 @@ export default function BannerCarousel() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ process.env.NEXT_PUBLIC_STRAPI_TOKEN
           },
           body: JSON.stringify({
             query: GET_BANNERS_QUERY,
