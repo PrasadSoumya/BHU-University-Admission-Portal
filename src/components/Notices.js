@@ -127,7 +127,7 @@ export default function NoticeSection({ locale }) {
 
     if (error) {
         return (
-            <div className="flex items-center justify-center min-h-full bg-red-50 font-sans text-red-600" role="alert" aria-live="assertive">
+            <div className="flex items-center justify-center  bg-red-50 font-sans text-red-600" role="alert" aria-live="assertive">
                 <div className="p-6 bg-white rounded shadow-md text-center border border-red-300">
                     <h3 className="text-xl font-semibold">{t.errorTitle}</h3>
                     <p className="text-sm mt-2">{error.message}</p>
@@ -138,7 +138,7 @@ export default function NoticeSection({ locale }) {
 
     if (!filteredNotices.length) {
         return (
-            <div className="flex items-center justify-center p-10 bg-gradient-to-br from-blue-50 to-indigo-100 text-gray-600 font-sans min-h-full" role="status" aria-live="polite">
+            <div className="flex items-center justify-center p-10 bg-gradient-to-br from-blue-50 to-indigo-100 text-gray-600 font-sans" role="status" aria-live="polite">
                 <div className="p-6 bg-white rounded shadow text-center">
                     <h3 className="text-xl font-semibold">{t.noNotices}</h3>
                 </div>
