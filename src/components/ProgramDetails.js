@@ -340,7 +340,7 @@ export default function ProgramDetails({ programType, level, visibleProgramType,
                                     <td className="py-3 px-4 text-sm text-gray-800">{program.department?.name || 'N/A'}</td>
                                     <td className="py-3 px-4 text-sm text-gray-800">{program.termType}</td>
                                     <td className="py-3 px-4 text-sm text-gray-800">{program.totalTerms}</td>
-                                    <td className="py-3 px-4 text-sm text-gray-800">{program.minimumDurationMonth}</td>
+                                    <td className="py-3 px-4 text-sm text-gray-800">{parseInt(program.minimumDurationMonth).toString()}</td>
                                 </tr>
                             ))}
                         </tbody>
