@@ -156,7 +156,7 @@ export default function BannerCarousel({ locale }) {
 
   return (
     <section
-      className="relative w-full h-[50vh] sm:h-[50vh] overflow-hidden z-0"
+      className="relative w-full h-[70vh] sm:h-[50vh] md:h-[70vh] lg:h-[70vh] xl:h-[70vh] overflow-hidden z-0"
       role="region"
       aria-label="Image Carousel"
     >
@@ -178,7 +178,7 @@ export default function BannerCarousel({ locale }) {
             <img
               src={activeSlide.image}
               alt={`${t.bannerImageAlt} ${activeSlide.title}`}
-              className="absolute top-0 left-0 w-full h-full object-cover z-10"
+              className="absolute top-0 left-0 w-full h-full object-fit z-10"
               aria-current="true"
               loading="eager" // First banner is eager, subsequent can be lazy if preloaded
             />
