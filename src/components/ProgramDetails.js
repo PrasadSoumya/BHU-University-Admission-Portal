@@ -392,7 +392,7 @@ export default function ProgramDetails({ programType, level, visibleProgramType,
 
                 {pageInfo.total > 0 && (
                     <div className="text-center text-sm text-gray-600 mt-4" aria-live="polite">
-                        {`${t.showingPrograms} ${programs.length} ${t.of} ${pageInfo.total} ${t.programs}. ${t.page} ${pageInfo.page} ${t.pageOf} ${pageInfo.pageCount}.`}
+                        {`${t.showingPrograms} ${programs.length} ${t.of} ${pageInfo.total} ${t.programs} ${pageInfo.page} ${t.pageOf} ${pageInfo.pageCount}.`}
                     </div>
                 )}
             </div>
