@@ -1,6 +1,7 @@
-// src/app/[locale]/notice/[...slug]/page.js
 
 import NoticeDetailsClient from "@/components/NoticeDetailsClient";
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 export async function generateMetadata({ params }) {
     const locale = (await params).locale;
@@ -61,10 +62,12 @@ export async function generateMetadata({ params }) {
             ? notice.content.replace(/<[^>]+>/g, "").slice(0, 160)
             : "";
 
+            console.log(notice.title);
+
         return {
-            title: notice.title || (locale === "hi-IN" ? "सूचना विवरण" : "Notice Details"),
+            title: notice.title ,
             description:
-                plainDescription || (locale === "hi-IN" ? "सूचना विवरण पृष्ठ।" : "Notice details page."),
+                plainDescription,
             openGraph: {
                 title: notice.title,
                 description: plainDescription,
@@ -76,6 +79,7 @@ export async function generateMetadata({ params }) {
             },
         };
     } catch (error) {
+        console.log(error);
         return {
             title: locale === "hi-IN" ? "त्रुटि" : "Error",
             description: locale === "hi-IN" ? "मेटाडेटा लोड करने में समस्या।" : "Problem loading metadata.",

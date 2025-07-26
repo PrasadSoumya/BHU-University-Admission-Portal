@@ -285,11 +285,11 @@ export default function Navbar({ locale }) {
                                 <img
                                     src={process.env.NEXT_PUBLIC_STRAPI_API_URL+"/uploads/logo_big_3_small_843dd9d936.png"}
                                     alt={t.bhuLogo}
-                                    className="h-24"
+                                    className="h-16"
                                 />
                             </a>
                         </div>
-                        <nav className="flex-grow flex justify-end space-x-10 text-xl font-semibold" aria-label="Main Navigation">
+                        <nav className="flex-grow flex justify-end space-x-10 text-xm font-semibold" aria-label="Main Navigation">
                             {navigationItems.map((link) => (
                                 <a
                                     key={link.id}

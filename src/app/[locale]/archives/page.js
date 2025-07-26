@@ -19,7 +19,7 @@ export default function ArchivedNotices() {
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const pageSize = 5;
+    const pageSize = 20;
 
     const graphqlApiUrl = process.env.NEXT_PUBLIC_GRAPHQL_API_URL || 'http://localhost:1337/graphql';
     const strapiToken = process.env.NEXT_PUBLIC_STRAPI_TOKEN;

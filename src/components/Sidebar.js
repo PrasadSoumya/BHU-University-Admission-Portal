@@ -281,7 +281,7 @@ export default function Sidebar({ locale }) {
                 )}
 
                 {activeMainTab === 'apply' && (
-                    <div id="apply-section" role="tabpanel" aria-labelledby="tab-apply" tabIndex={0} className="text-sm leading-6 space-y-2">
+                    <div id="apply-section" role="tabpanel" aria-labelledby="tab-apply" tabIndex={0} className="text-sm w-full leading-6 space-y-2">
                         {selectedLevel?.content ? (
                             <div className="apply-content text-gray-700" dangerouslySetInnerHTML={{ __html: selectedLevel.content }} role="document" />
                         ) : (
