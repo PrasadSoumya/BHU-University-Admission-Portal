@@ -102,14 +102,14 @@ export default function AboutUs({ locale }) {
 
         return (
             <div className="flex-shrink-0">
-                <div className="text-center mb-2 text-sm font-semibold text-gray-700">{member.designation}</div>
+                <div className="text-center mb-2 text-lg font-semibold text-gray-700">{member.designation}</div>
                 <div className="bg-white rounded-lg shadow p-4 text-center hover:shadow-md transition">
                     <div className="flex justify-center mb-2">
                         {photo?.url ? (
                             <img
                                 src={strapiBaseUrl + photo.url}
                                 alt={fullName}
-                                className="w-24 h-24 rounded-full object-cover border"
+                                className="w-30 h-30 rounded-full object-fit border"
                             />
                         ) : (
                             <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
@@ -134,20 +134,20 @@ export default function AboutUs({ locale }) {
     };
 
     return (
-        <section className=" p-2 bg-gray-100 rounded shadow min-h-[780px]">
+        <section className=" p-2 bg-gray-100 rounded items-center shadow min-h-[780px]">
             <div className="h-full min-w-full">
                 {loading && <p className="text-gray-600">{t.loading}</p>}
                 {error && <p className="text-red-600">{t.error} {error.message}</p>}
 
                 {!loading && !error && data?.aboutus?.isVisible && (
                     <>
-                        <h2 className="text-2xl font-bold text-indigo-600 text-center mb-4 px-2">
+                        <h2 className="text-3xl font-bold text-indigo-600 text-center justify-center mb-4 px-2">
                             {t.aboutTitle}
                         </h2>
 
                         <div className="mb-6">
                             <div
-                                className="text-gray-800 leading-relaxed prose max-w-none"
+                                className="text-gray-800 leading-relaxed prose text-xl max-w-none"
                                 dangerouslySetInnerHTML={{ __html: data?.aboutus?.content }}
                             />
                         </div>

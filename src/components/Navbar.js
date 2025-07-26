@@ -147,16 +147,13 @@ export default function Navbar({ locale }) {
     const decreaseFontSize = () => setFontSize(prev => Math.max(prev - 2, 10));
     const resetFontSize = () => setFontSize(16);
 
-    // Placeholder for screen reader activation
     const activateScreenReader = () => {
         alert("Screen Reader functionality would be activated here.");
-        // In a real application, you'd integrate with an actual screen reader library or API.
     };
 
     return (
         <section aria-label="Site Navigation and Accessibility Tools">
-            {/* Top Bar: Accessibility & Language */}
-            <div className="bg-slate-500 text-sm text-black px-4 py-2 flex flex-col md:flex-row justify-between items-center font-sans gap-3 md:gap-0">
+            <div className="bg-slate-500 text-sm text-black px-2 py-1 flex flex-col md:flex-row justify-between items-center font-sans gap-3 md:gap-0">
                 <div className="flex justify-center items-center">
                     <a
                         href="https://bhu.ac.in"
@@ -250,15 +247,15 @@ export default function Navbar({ locale }) {
             )}
 
             {!loading && !error && (
-                <header className="bg-slate-700 text-white py-4 px-4 md:px-8 relative z-20 flex flex-col"> {/* Changed to flex-col for overall header structure */}
+                <header className="bg-slate-700 text-white py-2 px-2 md:px-8 relative z-20 flex flex-col"> {/* Changed to flex-col for overall header structure */}
                     {/* Mobile: Logo and Hamburger in one row */}
-                    <div className="flex items-center justify-between md:hidden w-full mb-4"> {/* Added mb-4 for spacing */}
+                    <div className="flex items-center justify-between md:hidden w-full"> {/* Added mb-4 for spacing */}
                         <div className="flex-shrink-0">
                             <a href={`/${locale}`} aria-label="Home" className="block">
                                 <img
                                     src={process.env.NEXT_PUBLIC_STRAPI_API_URL+"/uploads/logo_big_3_small_843dd9d936.png"}
                                     alt={t.bhuLogo}
-                                    className="h-16 rounded-md shadow-md" /* Adjusted height for mobile top row */
+                                    className="h-16" /* Adjusted height for mobile top row */
                                 />
                             </a>
                         </div>
@@ -282,14 +279,13 @@ export default function Navbar({ locale }) {
                         </button>
                     </div>
 
-                    {/* Desktop: Logo on left, Nav links on right */}
                     <div className="hidden md:flex items-center justify-between w-full">
                         <div className="flex-shrink-0 mr-8">
                             <a href={`/${locale}`} aria-label="Home" className="block">
                                 <img
                                     src={process.env.NEXT_PUBLIC_STRAPI_API_URL+"/uploads/logo_big_3_small_843dd9d936.png"}
                                     alt={t.bhuLogo}
-                                    className="h-24 rounded-md shadow-md"
+                                    className="h-24"
                                 />
                             </a>
                         </div>
@@ -309,16 +305,14 @@ export default function Navbar({ locale }) {
                         </nav>
                     </div>
 
-                    {/* Mobile Menu Content (Full-screen overlay when open) */}
                     {isOpen && (
-                        <div id="mobile-menu" className="fixed inset-0 bg-slate-700 bg-opacity-95 flex flex-col z-1050 p-6" role="menu">
-                            {/* Top row within mobile menu: Logo and Close Button */}
-                            <div className="flex items-center justify-between w-full mb-8"> {/* Added mb-8 for spacing */}
+                        <div id="mobile-menu" className="fixed inset-0 bg-slate-700 bg-opacity-95 flex flex-col z-1050 p-2" role="menu">
+                            <div className="flex items-center justify-between w-full"> 
                                 <a href={`/${locale}`} onClick={toggleMenu} aria-label="Home">
                                     <img
                                         src={process.env.NEXT_PUBLIC_STRAPI_API_URL+"/uploads/logo_big_3_small_843dd9d936.png"}
                                         alt={t.bhuLogo}
-                                        className="h-20 rounded-md shadow-md" /* Larger logo in open menu */
+                                        className="h-20 " 
                                     />
                                 </a>
                                 <button
