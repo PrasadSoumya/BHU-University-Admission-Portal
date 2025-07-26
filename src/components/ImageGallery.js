@@ -119,7 +119,7 @@ export default function RecentEvent({ locale }) {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-white/30 pb-4 mb-6">
         <h2 className="text-2xl sm:text-3xl font-bold uppercase">{t.activities}</h2>
         <a
-          href="https://news.bhu.ac.in/activities"
+          href={process.env.NEXT_PUBLIC_NEWS_PORTAL+"/activities"}
           target="_blank"
           rel="noopener noreferrer"
           className="mt-4 md:mt-0 inline-flex items-center gap-2 text-white border border-white hover:bg-white hover:text-black transition-all duration-200 px-4 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-white"
