@@ -24,8 +24,8 @@ export default function Navbar({ locale }) {
     const translations = {
         en: {
             visitBHU: "Visit BHU Official Website",
-            english: "English",
-            hindi: "हिंदी",
+            english: "En", // Changed to En
+            hindi: "Hi", // Changed to Hi
             loadingNavbar: "Loading Navigation...",
             errorNavbar: "Error loading Navigation data!",
             smaller: "Make Text Smaller",
@@ -34,12 +34,12 @@ export default function Navbar({ locale }) {
             toggleMenu: "Toggle navigation menu",
             closeMenu: "Close navigation menu",
             bhuLogo: "Banaras Hindu University Logo",
-            screenReader: "Activate Screen Reader" // New translation
+            screenReader: "Activate Screen Reader"
         },
         "hi-IN": {
             visitBHU: "बीएचयू की आधिकारिक वेबसाइट पर जाएं",
-            english: "अंग्रेज़ी",
-            hindi: "हिंदी",
+            english: "अंग्रेज़ी", 
+            hindi: "हिंदी", 
             loadingNavbar: "नेविगेशन लोड हो रहा है...",
             errorNavbar: "नेविगेशन डेटा लोड करने में त्रुटि!",
             smaller: "पाठ छोटा करें",
@@ -48,7 +48,7 @@ export default function Navbar({ locale }) {
             toggleMenu: "नेविगेशन मेनू टॉगल करें",
             closeMenu: "नेविगेशन मेनू बंद करें",
             bhuLogo: "काशी हिंदू विश्वविद्यालय का लोगो",
-            screenReader: "स्क्रीन रीडर सक्रिय करें" // New translation
+            screenReader: "स्क्रीन रीडर सक्रिय करें"
         }
     };
 
@@ -147,20 +147,25 @@ export default function Navbar({ locale }) {
     const decreaseFontSize = () => setFontSize(prev => Math.max(prev - 2, 10));
     const resetFontSize = () => setFontSize(16);
 
-
+    // Placeholder for screen reader activation
+    const activateScreenReader = () => {
+        alert("Screen Reader functionality would be activated here.");
+        // In a real application, you'd integrate with an actual screen reader library or API.
+    };
 
     return (
         <section aria-label="Site Navigation and Accessibility Tools">
-            <div className="bg-slate-500 text-sm text-black  px-2 flex flex-col md:flex-row justify-between items-center font-sans gap-4 md:gap-0">
+            {/* Top Bar: Accessibility & Language */}
+            <div className="bg-slate-500 text-sm text-black px-4 py-2 flex flex-col md:flex-row justify-between items-center font-sans gap-3 md:gap-0">
                 <div className="flex justify-center items-center">
                     <a
                         href="https://bhu.ac.in"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-gradient-to-r from-[#a54417] to-orange-500 text-white font-semibold py-2.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+                        className="bg-gradient-to-r from-[#a54417] to-orange-500 text-white font-semibold py-2 px-5 rounded-full shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
                         aria-label={`${t.visitBHU} (opens in new tab)`}
                     >
-                        <FaGlobe aria-hidden="true" />
+                        <FaGlobe aria-hidden="true" className="text-lg" />
                         {t.visitBHU}
                     </a>
                 </div>
@@ -169,26 +174,26 @@ export default function Navbar({ locale }) {
                     <div className="flex gap-2 items-center" role="group" aria-label="Language selection">
                         <button
                             onClick={() => handleLanguageChange('en')}
-                            className={`px-4 py-1.5 rounded-lg border text-sm font-medium transition duration-200 ease-in-out flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white ${locale === 'en'
+                            className={`px-3 py-1.5 rounded-lg border text-sm font-medium transition duration-200 ease-in-out flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white ${locale === 'en'
                                 ? 'bg-blue-600 text-white shadow-md'
                                 : 'bg-white text-black hover:bg-gray-100'
                                 }`}
                             aria-current={locale === 'en' ? "page" : undefined}
                             aria-label={t.english}
                         >
-                            <MdLanguage className="text-xl text-white" aria-hidden="true" />
+                            <MdLanguage className="text-xl" aria-hidden="true" />
                             {t.english}
                         </button>
                         <button
                             onClick={() => handleLanguageChange('hi-IN')}
-                            className={`px-4 py-1.5 rounded-lg border text-sm font-medium transition duration-200 ease-in-out flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white ${locale === 'hi-IN'
+                            className={`px-3 py-1.5 rounded-lg border text-sm font-medium transition duration-200 ease-in-out flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white ${locale === 'hi-IN'
                                 ? 'bg-blue-600 text-white shadow-md'
                                 : 'bg-white text-black hover:bg-gray-100'
                                 }`}
                             aria-current={locale === 'hi-IN' ? "page" : undefined}
                             aria-label={t.hindi}
                         >
-                            <MdLanguage className="text-xl text-white" aria-hidden="true" />
+                            <MdLanguage className="text-xl" aria-hidden="true" />
                             {t.hindi}
                         </button>
                     </div>
@@ -197,76 +202,69 @@ export default function Navbar({ locale }) {
                         <button
                             onClick={decreaseFontSize}
                             title={t.smaller}
-                            className="px-3 py-1.5 bg-white text-black rounded-lg border hover:bg-gray-100 transition flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+                            className="px-3 py-1.5 bg-white text-black rounded-lg border hover:bg-gray-100 transition flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
                             aria-label={t.smaller}
                         >
-                            <FaMinus aria-hidden="true" />
+                            <FaMinus aria-hidden="true" className="text-base" />
                         </button>
-                        {/* New Screen Reader Button */}
-
                         <button
                             onClick={resetFontSize}
                             title={t.reset}
-                            className="px-3 py-1.5 bg-white text-black rounded-lg border hover:bg-gray-100 transition flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+                            className="px-3 py-1.5 bg-white text-black rounded-lg border hover:bg-gray-100 transition flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
                             aria-label={t.reset}
                         >
-                            <BiReset aria-hidden="true" />
+                            <BiReset aria-hidden="true" className="text-base" />
                         </button>
                         <button
                             onClick={increaseFontSize}
                             title={t.larger}
-                            className="px-3 py-1.5 bg-white text-black rounded-lg border hover:bg-gray-100 transition flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+                            className="px-3 py-1.5 bg-white text-black rounded-lg border hover:bg-gray-100 transition flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
                             aria-label={t.larger}
                         >
-                            <FaPlus aria-hidden="true" />
+                            <FaPlus aria-hidden="true" className="text-base" />
+                        </button>
+                        {/* New Screen Reader Button */}
+                        <button
+                            onClick={activateScreenReader}
+                            title={t.screenReader}
+                            className="px-3 py-1.5 bg-white text-black rounded-lg border hover:bg-gray-100 transition flex items-center justify-center gap-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+                            aria-label={t.screenReader}
+                        >
+                            <FaVideo aria-hidden="true" className="text-base" />
+                            <span className="sr-only md:not-sr-only">{t.screenReader}</span> {/* Visible on desktop, SR-only on mobile */}
                         </button>
                     </div>
                 </div>
             </div>
 
             {loading && (
-                <header className="bg-bhuBlue text-white py-4 px-6 flex items-center justify-between relative z-20" role="status" aria-live="polite">
-                    <span className="text-gray-300">{t.loadingNavbar}</span>
+                <header className="bg-slate-700 text-white py-4 px-6 flex items-center justify-center relative z-20" role="status" aria-live="polite">
+                    <span className="text-gray-300 text-lg font-semibold animate-pulse">{t.loadingNavbar}</span>
                 </header>
             )}
 
             {error && (
-                <header className="bg-red-700 text-white py-4 px-6 flex items-center justify-between relative z-20" role="alert" aria-live="assertive">
-                    <span className="text-white">{t.errorNavbar}</span>
+                <header className="bg-red-700 text-white py-4 px-6 flex items-center justify-center relative z-20" role="alert" aria-live="assertive">
+                    <span className="text-white text-lg font-semibold">{t.errorNavbar}</span>
                 </header>
             )}
 
             {!loading && !error && (
-                <header className="bg-slate-700 text-white py-2 px-2 flex items-center justify-between relative z-20 ">
-                    <div className="flex items-center space-x-4">
-                        <a href={`/${locale}`} aria-label="Home">
-                            <img
-                                src="https://api.bhu.edu.in/uploads/logo_big_3_small_843dd9d936.png"
-                                alt={t.bhuLogo}
-                                className="h-20"
-                            />
-                        </a>
-                    </div>
-
-                    <nav className="hidden md:flex space-x-15 text-lg font-medium mr-20" aria-label="Main Navigation">
-                        {navigationItems.map((link) => (
-                            <a
-                                key={link.id}
-                                href={link.enums === "external" ? link.url : `/${locale}${link.url}`}
-                                target={link.enums === "external" ? "_blank" : undefined}
-                                rel={link.enums === "external" ? "noopener noreferrer" : undefined}
-                                className="hover:text-bhuOrange uppercase hover:scale-110 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-bhuOrange"
-                                aria-label={link.enums === "external" ? `${link.Title} (opens in new tab)` : link.Title}
-                            >
-                                {link.Title}
+                <header className="bg-slate-700 text-white py-4 px-4 md:px-8 relative z-20 flex flex-col"> {/* Changed to flex-col for overall header structure */}
+                    {/* Mobile: Logo and Hamburger in one row */}
+                    <div className="flex items-center justify-between md:hidden w-full mb-4"> {/* Added mb-4 for spacing */}
+                        <div className="flex-shrink-0">
+                            <a href={`/${locale}`} aria-label="Home" className="block">
+                                <img
+                                    src={process.env.NEXT_PUBLIC_STRAPI_API_URL+"/uploads/logo_big_3_small_843dd9d936.png"}
+                                    alt={t.bhuLogo}
+                                    className="h-16 rounded-md shadow-md" /* Adjusted height for mobile top row */
+                                />
                             </a>
-                        ))}
-                    </nav>
-
-                    <div className="md:hidden">
+                        </div>
                         <button
                             onClick={toggleMenu}
-                            className="text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white rounded"
+                            className="text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white rounded-md p-2"
                             aria-expanded={isOpen}
                             aria-controls="mobile-menu"
                             aria-label={t.toggleMenu}
@@ -284,47 +282,79 @@ export default function Navbar({ locale }) {
                         </button>
                     </div>
 
-                    {isOpen && (
-                        <div id="mobile-menu" className="fixed inset-0 items-center space-y-10 bg-slate-700 bg-opacity-95 flex flex-col z-1050" role="menu">
-                            <button
-                                onClick={toggleMenu}
-                                className="absolute top-4 right-6 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white rounded"
-                                aria-label={t.closeMenu}
-                            >
-                                <svg
-                                    className="w-10 h-10"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    aria-hidden="true"
-                                >
-                                    <path strokeLinecap="square" strokeLinejoin="square" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
-                            <div className="flex items-start space-x-4 mt-16">
-                                <a href={`/${locale}`} onClick={toggleMenu} aria-label="Home">
-                                    <img
-                                        src="https://api.bhu.edu.in/uploads/logo_big_3_small_843dd9d936.png"
-                                        alt={t.bhuLogo}
-                                        className="h-20"
-                                    />
-                                </a>
-                            </div>
+                    {/* Desktop: Logo on left, Nav links on right */}
+                    <div className="hidden md:flex items-center justify-between w-full">
+                        <div className="flex-shrink-0 mr-8">
+                            <a href={`/${locale}`} aria-label="Home" className="block">
+                                <img
+                                    src={process.env.NEXT_PUBLIC_STRAPI_API_URL+"/uploads/logo_big_3_small_843dd9d936.png"}
+                                    alt={t.bhuLogo}
+                                    className="h-24 rounded-md shadow-md"
+                                />
+                            </a>
+                        </div>
+                        <nav className="flex-grow flex justify-end space-x-10 text-xl font-semibold" aria-label="Main Navigation">
                             {navigationItems.map((link) => (
                                 <a
-                                    key={`mobile-${link.id}`}
+                                    key={link.id}
                                     href={link.enums === "external" ? link.url : `/${locale}${link.url}`}
-                                    onClick={toggleMenu}
                                     target={link.enums === "external" ? "_blank" : undefined}
                                     rel={link.enums === "external" ? "noopener noreferrer" : undefined}
-                                    className="text-white uppercase font-semibold hover:scale-110 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+                                    className="text-white hover:text-orange-300 uppercase transition-colors duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-300 rounded-md px-3 py-2"
                                     aria-label={link.enums === "external" ? `${link.Title} (opens in new tab)` : link.Title}
-                                    role="menuitem"
                                 >
                                     {link.Title}
                                 </a>
                             ))}
+                        </nav>
+                    </div>
+
+                    {/* Mobile Menu Content (Full-screen overlay when open) */}
+                    {isOpen && (
+                        <div id="mobile-menu" className="fixed inset-0 bg-slate-700 bg-opacity-95 flex flex-col z-1050 p-6" role="menu">
+                            {/* Top row within mobile menu: Logo and Close Button */}
+                            <div className="flex items-center justify-between w-full mb-8"> {/* Added mb-8 for spacing */}
+                                <a href={`/${locale}`} onClick={toggleMenu} aria-label="Home">
+                                    <img
+                                        src={process.env.NEXT_PUBLIC_STRAPI_API_URL+"/uploads/logo_big_3_small_843dd9d936.png"}
+                                        alt={t.bhuLogo}
+                                        className="h-20 rounded-md shadow-md" /* Larger logo in open menu */
+                                    />
+                                </a>
+                                <button
+                                    onClick={toggleMenu}
+                                    className="text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white rounded-md p-2"
+                                    aria-label={t.closeMenu}
+                                >
+                                    <svg
+                                        className="w-10 h-10"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true"
+                                    >
+                                        <path strokeLinecap="square" strokeLinejoin="square" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                            {/* Second row within mobile menu: Navigation Links */}
+                            <nav className="flex flex-col items-center space-y-6 flex-grow" aria-label="Mobile Navigation">
+                                {navigationItems.map((link) => (
+                                    <a
+                                        key={`mobile-${link.id}`}
+                                        href={link.enums === "external" ? link.url : `/${locale}${link.url}`}
+                                        onClick={toggleMenu}
+                                        target={link.enums === "external" ? "_blank" : undefined}
+                                        rel={link.enums === "external" ? "noopener noreferrer" : undefined}
+                                        className="text-white uppercase font-semibold text-xl hover:scale-105 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white px-4 py-2 rounded-md"
+                                        aria-label={link.enums === "external" ? `${link.Title} (opens in new tab)` : link.Title}
+                                        role="menuitem"
+                                    >
+                                        {link.Title}
+                                    </a>
+                                ))}
+                            </nav>
                         </div>
                     )}
                 </header>

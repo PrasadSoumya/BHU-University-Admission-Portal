@@ -186,7 +186,7 @@ export default function BannerCarousel({ locale }) {
           <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30 z-15"></div>
 
           <div className="relative z-20 flex flex-col items-center justify-center h-full text-center text-white px-4 animate-fade-in">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">{activeSlide.title}</h1>
+            <h1 className="text-2xl md:text-4xl font-bold mb-4">{activeSlide.title}</h1>
             <p className="text-lg md:text-xl mb-6">{activeSlide.description}</p>
             {activeSlide.buttonUrl && activeSlide.buttonText && (
               <a

@@ -4,7 +4,7 @@ import { generateSlug } from './slug';
 export default function EventCard({ item, image }) {
 
     return (<div key={item.documentId} className="flex rounded relative bg-white flex-col hover:scale-105 text-gray-700 shadow-white bg-clip-border">
-        <a href={"/activities/" + generateSlug(item?.title) + "/" + item?.documentId} target='_blank'>
+        <a href={"https://news.bhu.ac.in/activities/" + generateSlug(item?.title) + "/" + item?.documentId} target='_blank'>
             <div
                 className="relative overflow-hidden text-white bg-clip-border h-40  shadow-blue-gray-500/40">
                 <div className="overflow-hidden">
