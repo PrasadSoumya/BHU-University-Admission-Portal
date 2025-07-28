@@ -157,7 +157,7 @@ export default function NoticeSection({ locale }) {
                         role="article"
                         aria-labelledby={`notice-title-${notice.documentId}`}
                     >
-                        <h3 id={`notice-title-${notice.documentId}`} className="text-lg font-semibold text-indigo-700">{notice.title}</h3>
+                        <h3 id={`notice-title-${notice.documentId}`} className="text-xm font-semibold text-indigo-700">{notice.title}</h3>
 
                         <div className="flex justify-between items-center mt-3 text-sm text-[#a54417]">
                             <a

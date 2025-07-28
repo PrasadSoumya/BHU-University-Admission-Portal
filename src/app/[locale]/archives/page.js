@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 
 const formatSlug = (title) => {
     return title
@@ -18,6 +18,7 @@ export default function ArchivedNotices() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
+    const [tempQuery, setTempQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 20;
 
@@ -31,6 +32,7 @@ export default function ArchivedNotices() {
             noNotices: "No archived notices found",
             readMore: "Read More",
             searchPlaceholder: "Search by title...",
+            searchButton: "Search",
         },
         "hi-IN": {
             loading: "पुरानी सूचनाएं लोड हो रही हैं...",
@@ -38,6 +40,7 @@ export default function ArchivedNotices() {
             noNotices: "कोई पुरानी सूचना नहीं मिली",
             readMore: "और पढ़ें",
             searchPlaceholder: "शीर्षक से खोजें...",
+            searchButton: "खोजें",
         }
     };
 
@@ -140,13 +143,24 @@ export default function ArchivedNotices() {
     if (!searchedNotices.length) {
         return (
             <div className="flex flex-col items-center justify-center p-10 bg-gradient-to-br from-blue-50 to-indigo-100 text-gray-600 font-sans">
-                <input
-                    type="text"
-                    placeholder={t.searchPlaceholder}
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="mb-4 px-4 py-2 border rounded shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                />
+                <div className="flex items-center space-x-2 mb-6 max-w-2xl w-full">
+                    <input
+                        type="text"
+                        placeholder={t.searchPlaceholder}
+                        value={tempQuery}
+                        onChange={(e) => setTempQuery(e.target.value)}
+                        className="flex-grow px-4 py-2 border rounded shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                    />
+                    <button
+                        onClick={() => {
+                            setSearchQuery(tempQuery);
+                            setCurrentPage(1);
+                        }}
+                        className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
+                    >
+                        {t.searchButton}
+                    </button>
+                </div>
                 <div className="p-6 bg-white rounded shadow text-center">
                     <h3 className="text-xl font-semibold">{t.noNotices}</h3>
                 </div>
@@ -157,16 +171,25 @@ export default function ArchivedNotices() {
     return (
         <div className="p-4 bg-gradient-to-br from-slate-600 to-slate-200 min-h-screen">
             <div className="mx-auto">
-                <input
-                    type="text"
-                    placeholder={t.searchPlaceholder}
-                    value={searchQuery}
-                    onChange={(e) => {
-                        setSearchQuery(e.target.value);
-                        setCurrentPage(1);
-                    }}
-                    className="mb-6 max-w-2xl px-4 py-2 bg-white border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                />
+                {/* Search Input with Button */}
+                <div className="flex items-center space-x-2 mb-6 max-w-2xl w-full">
+                    <input
+                        type="text"
+                        placeholder={t.searchPlaceholder}
+                        value={tempQuery}
+                        onChange={(e) => setTempQuery(e.target.value)}
+                        className="flex-grow px-4 py-2 bg-white border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    />
+                    <button
+                        onClick={() => {
+                            setSearchQuery(tempQuery);
+                            setCurrentPage(1);
+                        }}
+                        className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
+                    >
+                        {t.searchButton}
+                    </button>
+                </div>
 
                 <div className="space-y-4">
                     {paginatedNotices.map((notice) => (

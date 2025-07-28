@@ -16,14 +16,14 @@ export default function AboutUs({ locale }) {
             loading: "Loading...",
             error: "Error:",
             aboutTitle: "About the Committee",
-            leadershipTitle: "Our Leadership",
+            leadershipTitle: "Central Admission Committee",
             noPhoto: "N/A",
         },
         "hi-IN": {
             loading: "लोड हो रहा है...",
             error: "त्रुटि:",
             aboutTitle: "समिति के बारे में",
-            leadershipTitle: "हमारे पदाधिकारी",
+            leadershipTitle: "केंद्रीय प्रवेश समिति",
             noPhoto: "फ़ोटो नहीं",
         }
     };
@@ -153,21 +153,26 @@ export default function AboutUs({ locale }) {
                         </div>
 
                         {data.aboutus.members?.length > 0 && (
-                            <div>
-                                <h2 className="text-xl font-bold text-indigo-600 text-center mb-4 px-2">
+                            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                                <h2 className="text-3xl sm:text-3xl font-extrabold text-indigo-700 text-center mb-10">
                                     {t.leadershipTitle}
                                 </h2>
-                                <div className="flex flex-col md:flex-row md:flex-wrap md:gap-6 gap-4 items-center justify-center px-2">
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                                     {data.aboutus.members
                                         .slice()
                                         .sort((a, b) => a.order - b.order)
                                         .map((member, idx) => (
-                                            <div key={idx}>
+                                            <div
+                                                key={idx}
+                                                className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out"
+                                            >
                                                 {renderMemberCard(member)}
                                             </div>
                                         ))}
                                 </div>
                             </div>
+
                         )}
                     </>
                 )}
