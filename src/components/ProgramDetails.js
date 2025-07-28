@@ -234,7 +234,7 @@ export default function ProgramDetails({ programType, level, visibleProgramType,
                                     <td className="px-4 py-2">{program.department?.name || "N/A"}</td>
                                     <td className="px-4 py-2">{program.termType}</td>
                                     <td className="px-4 py-2">{program.totalTerms}</td>
-                                    <td className="px-4 py-2">{program.minimumDurationMonth}</td>
+                                    <td className="px-4 py-2">{Math.trunc(program.minimumDurationMonth)}</td>
                                 </tr>
                             ))}
                         </tbody>

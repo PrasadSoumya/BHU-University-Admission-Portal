@@ -37,31 +37,27 @@ export default function NoticeSection({ locale }) {
 
     useEffect(() => {
         const GET_NOTICE_DETAILS_QUERY = `
-        query GetNoticeDetails($locale : String!) {
-            admissionNotices_connection(
-                sort: "startDate:desc", 
-                pagination: { pageSize: 20 },
-                filters: { isVisible: { eq: true }, locale: { eq: $locale } }
-            ) {
-                nodes {
-                    documentId
-                    title
-                    startDate
-                    endDate
-                    content
-                    isVisible
-                    links {
-                        Title
-                        url
-                        attachment { url }
-                        isVisible
-                    }
+        query GetNoticeDetails($locale: String!, $today: DateTime!) {
+            admissionNotices(
+                sort: "startDate:desc",
+                pagination: { pageSize: 1000 },
+                filters: {
+                    isVisible: { eq: true },
+                    locale: { eq: $locale },
+                    endDate: { gte: $today }
                 }
-                pageInfo {
-                    page
-                    pageSize
-                    pageCount
-                    total
+            ) {
+                documentId
+                title
+                startDate
+                endDate
+                content
+                isVisible
+                links {
+                    Title
+                    url
+                    attachment { url }
+                    isVisible
                 }
             }
         }`;
@@ -70,6 +66,10 @@ export default function NoticeSection({ locale }) {
             setLoading(true);
             setError(null);
             try {
+                const todayDate = new Date();
+                todayDate.setHours(0, 0, 0, 0);
+                const isoToday = new Date().toISOString();
+
                 const res = await fetch(graphqlApiUrl, {
                     method: 'POST',
                     headers: {
@@ -78,7 +78,10 @@ export default function NoticeSection({ locale }) {
                     },
                     body: JSON.stringify({
                         query: GET_NOTICE_DETAILS_QUERY,
-                        variables: { locale }
+                        variables: {
+                            locale,
+                            today: isoToday
+                        }
                     }),
                 });
 
@@ -106,14 +109,7 @@ export default function NoticeSection({ locale }) {
         fetchNoticeDetails();
     }, [graphqlApiUrl, strapiToken, locale]);
 
-    const notices = data?.admissionNotices_connection?.nodes || [];
-
-    const today = new Date();
-    const filteredNotices = notices.filter(notice => {
-        const endDate = new Date(notice.endDate);
-        endDate.setHours(23, 59, 59, 999);
-        return endDate >= today;
-    });
+    const notices = data?.admissionNotices || [];
 
     if (loading) {
         return (
@@ -127,7 +123,7 @@ export default function NoticeSection({ locale }) {
 
     if (error) {
         return (
-            <div className="flex items-center justify-center  bg-red-50 font-sans text-red-600" role="alert" aria-live="assertive">
+            <div className="flex items-center justify-center bg-red-50 font-sans text-red-600" role="alert" aria-live="assertive">
                 <div className="p-6 bg-white rounded shadow-md text-center border border-red-300">
                     <h3 className="text-xl font-semibold">{t.errorTitle}</h3>
                     <p className="text-sm mt-2">{error.message}</p>
@@ -136,7 +132,7 @@ export default function NoticeSection({ locale }) {
         );
     }
 
-    if (!filteredNotices.length) {
+    if (!notices.length) {
         return (
             <div className="flex items-center justify-center p-10 bg-gradient-to-br from-blue-50 to-indigo-100 text-gray-600 font-sans" role="status" aria-live="polite">
                 <div className="p-6 bg-white rounded shadow text-center">
@@ -150,7 +146,7 @@ export default function NoticeSection({ locale }) {
         <section className="p-2 mt-2 font-sans text-gray-800 h-[700px] overflow-y-auto" aria-labelledby="notices-list-heading">
             <h2 id="notices-list-heading" className="sr-only">Active Notices</h2>
             <div className="space-y-2 max-w-3xl mx-auto">
-                {filteredNotices.map((notice) => (
+                {notices.map((notice) => (
                     <div
                         key={notice.documentId}
                         className="bg-white rounded-lg shadow p-2 transition hover:shadow-md focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2"
