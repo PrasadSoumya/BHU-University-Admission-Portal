@@ -31,7 +31,16 @@ export default function Footer({ locale }) {
       attachment: "Attachment",
       externalLink: "External link",
       opensInNewTab: "(opens in new tab)",
-      mapTitle: "Location of Central Admission Cell, Banaras Hindu University"
+      mapTitle: "Location of Central Admission Cell, Banaras Hindu University",
+      copyrightPolicy: "Copyright Policy",
+      hyperlinkingPolicy: "Hyperlinking Policy", // Added new translation
+      privacyPolicy: "Privacy Policy",
+      disclaimer: "Disclaimer",
+      termsOfUse: "Terms & Conditions", // Updated for clarity
+      help: "Help",
+      accessibility: "Accessibility Statement",
+      feedback: "Feedback",
+      websitePolicies: "Website Policies",
     },
     "hi-IN": {
       loading: "फ़ूटर सामग्री लोड हो रही है...",
@@ -45,7 +54,16 @@ export default function Footer({ locale }) {
       attachment: "अनुलग्नक",
       externalLink: "बाहरी लिंक",
       opensInNewTab: "(नए टैब में खुलता है)",
-      mapTitle: "केंद्रीय प्रवेश प्रकोष्ठ, काशी हिंदू विश्वविद्यालय का स्थान"
+      mapTitle: "केंद्रीय प्रवेश प्रकोष्ठ, काशी हिंदू विश्वविद्यालय का स्थान",
+      copyrightPolicy: "कॉपीराइट नीति",
+      hyperlinkingPolicy: "हाइपरलिंकिंग नीति", // Added new translation
+      privacyPolicy: "गोपनीयता नीति",
+      disclaimer: "अस्वीकरण",
+      termsOfUse: "नियम एवं शर्तें", // Updated for clarity
+      help: "सहायता",
+      accessibility: "सुगम्यता वक्तव्य",
+      feedback: "प्रतिक्रिया",
+      websitePolicies: "वेबसाइट नीतियाँ",
     }
   };
 
@@ -95,7 +113,6 @@ export default function Footer({ locale }) {
 
         if (!response.ok) {
           const errorBody = await response.text();
-          console.error("GraphQL API Error Response:", errorBody);
           throw new Error(
             `HTTP error! status: ${response.status}, details: ${errorBody}`
           );
@@ -103,10 +120,7 @@ export default function Footer({ locale }) {
 
         const json = await response.json();
 
-        if (json.errors) {
-          console.error("GraphQL Errors:", json.errors);
-          throw new Error(`GraphQL Errors: ${JSON.stringify(json.errors)}`);
-        }
+        if (json.errors) throw new Error(`GraphQL Errors: ${JSON.stringify(json.errors)}`);
 
         setData(json.data);
       } catch (err) {
@@ -203,6 +217,7 @@ export default function Footer({ locale }) {
                   </nav>
                 ))}
 
+              {/* Contact & Map section */}
               <div className="lg:col-span-2 flex flex-col md:flex-row justify-between gap-6">
                 <div className="md:flex-1">
                   <h3 className="text-white font-semibold text-lg mb-4">
@@ -211,41 +226,49 @@ export default function Footer({ locale }) {
                   <address className="not-italic space-y-4 text-sm">
                     <div className="flex items-start space-x-3">
                       <FaMapMarkerAlt className="text-indigo-400 mt-1 flex-shrink-0" aria-hidden="true" />
-                      <span>
-                        {t.address}
-                      </span>
+                      <span>{t.address}</span>
                     </div>
                     <div className="flex items-start space-x-3">
                       <FaPhoneAlt className="text-indigo-400 mt-1 flex-shrink-0" aria-hidden="true" />
-                      <a href={`tel:${t.phone}`} className="hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2" aria-label={`Call us at ${t.phone}`}>
-                        {t.phone}
-                      </a>
+                      <a href={`tel:${t.phone}`} className="hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">{t.phone}</a>
                     </div>
                     <div className="flex items-start space-x-3">
                       <FaEnvelope className="text-indigo-400 mt-1 flex-shrink-0" aria-hidden="true" />
-                      <a href={`mailto:${t.email}`} className="hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2" aria-label={`Email us at ${t.email}`}>
-                        {t.email}
-                      </a>
+                      <a href={`mailto:${t.email}`} className="hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">{t.email}</a>
                     </div>
                   </address>
                 </div>
 
                 <div className="md:flex-none w-full md:w-[320px]">
-                  <h3 className="text-white font-semibold text-lg mb-4">
-                    {t.location}
-                  </h3>
+                  <h3 className="text-white font-semibold text-lg mb-4">{t.location}</h3>
                   <div className="w-full h-48 rounded-md overflow-hidden">
                     <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.1777879514166!2d82.99251161258324!3d25.264604077574457!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398e3180c35aa449%3A0xc58ce99f4cf2c162!2sCentral%20Office!5e0!3m2!1sen!2sin!4v1752827690831!5m2!1sen!2sin"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.1777879514166!2d82.9925116!3d25.2646041!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398e3180c35aa449%3A0xc58ce99f4cf2c162!2sCentral%20Office!5e0!3m2!1sen!2sin!4v1752827690831!5m2!1sen!2sin"
                       width="600"
                       height="450"
                       style={{ border: '0px' }}
                       allowFullScreen
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
+                      title={t.mapTitle}
                     ></iframe>
                   </div>
                 </div>
+              </div>
+
+              {/* Policy Links */}
+              <div className="lg:col-span-4 ">
+                <nav aria-label="Footer Policy Links">
+                  <ul className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm text-gray-300">
+                    <li><a target="_blank" href={`/${locale}/copyright-policy`} className="hover:text-white">{t.copyrightPolicy}</a></li>
+                    <li><a  target="_blank" href={`/${locale}/hyperlinking-policy`} className="hover:text-white">{t.hyperlinkingPolicy}</a></li>
+                    <li><a  target="_blank" href={`/${locale}/terms-conditions`} className="hover:text-white">{t.termsOfUse}</a></li>
+                    <li><a  target="_blank" href={`/${locale}/privacy-policy`} className="hover:text-white">{t.privacyPolicy}</a></li>
+                    <li><a  target="_blank" href={`/${locale}/disclaimer`} className="hover:text-white">{t.disclaimer}</a></li>
+                    <li><a  target="_blank" href={`/${locale}/help`} className="hover:text-white">{t.help}</a></li>
+                    
+                  </ul>
+                </nav>
               </div>
             </>
           )}

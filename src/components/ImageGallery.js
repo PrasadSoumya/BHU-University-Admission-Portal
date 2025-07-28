@@ -114,15 +114,20 @@ export default function RecentEvent({ locale }) {
   }
 
   return (
-    <section className="px-4 py-8 sm:px-6 lg:px-10 bg-gradient-to-b from-slate-800 to-slate-900 text-white" aria-label={t.activities}>
+    <section
+      className="px-4 py-10 sm:px-8 lg:px-12 bg-gradient-to-b from-slate-800 to-slate-900 text-white"
+      aria-label={t.activities}
+    >
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-white/30 pb-4 mb-6">
-        <h2 className="text-2xl sm:text-3xl font-bold uppercase">{t.activities}</h2>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-white/20 pb-6 mb-8">
+        <h2 className="text-3xl sm:text-4xl font-extrabold tracking-wide uppercase">
+          {t.activities}
+        </h2>
         <a
-          href={process.env.NEXT_PUBLIC_NEWS_PORTAL+"/activities"}
+          href={process.env.NEXT_PUBLIC_NEWS_PORTAL + "/activities"}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 md:mt-0 inline-flex items-center gap-2 text-white border border-white hover:bg-white hover:text-black transition-all duration-200 px-4 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-white"
+          className="mt-4 md:mt-0 inline-flex items-center gap-2 text-white border border-white/30 hover:border-white hover:bg-white/10 hover:text-white transition-all duration-200 px-5 py-2.5 rounded-lg text-sm font-medium backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-white/50"
         >
           {t.viewMore}
           <svg
@@ -138,11 +143,12 @@ export default function RecentEvent({ locale }) {
       </div>
 
       {/* Events Grid */}
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {events.map((item) => (
           <EventCard key={item.documentId} item={item} image="thumbnail" />
         ))}
       </div>
     </section>
+
   );
 }

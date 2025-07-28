@@ -3,46 +3,61 @@ import { generateSlug } from './slug';
 
 export default function EventCard({ item, image }) {
 
-    return (<div key={item.documentId} className="flex rounded relative bg-white flex-col hover:scale-105 text-gray-700 shadow-white bg-clip-border">
-        <a href={process.env.NEXT_PUBLIC_NEWS_PORTAL+"/activities/" + generateSlug(item?.title) + "/" + item?.documentId} target='_blank'>
-            <div
-                className="relative overflow-hidden text-white bg-clip-border h-40  shadow-blue-gray-500/40">
-                <div className="overflow-hidden">
-                    <div className="">
-                        {item?.images?.map((element) => {
-                            const baseUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
-                            const imageUrl = image === "large"
-                                ? element?.url
-                                : element?.formats?.thumbnail?.url;
+    return (<div
+        key={item.documentId}
+        className="group relative flex flex-col overflow-hidden rounded-xl bg-white shadow-md hover:shadow-xl transition duration-300 ease-in-out"
+    >
+        <a
+            href={
+                process.env.NEXT_PUBLIC_NEWS_PORTAL +
+                "/activities/" +
+                generateSlug(item?.title) +
+                "/" +
+                item?.documentId
+            }
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-col h-full"
+        >
+            {/* Image Section */}
+            <div className="relative aspect-[16/9] overflow-hidden">
+                {item?.images?.map((element) => {
+                    const baseUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+                    const imageUrl =
+                        image === "large"
+                            ? element?.url
+                            : element?.formats?.thumbnail?.url;
 
-
-                            return (
-                                <div className="" key={element?.documentId}>
-                                    <img
-                                        className="h-full w-full object-cover rounded"
-                                        alt={item?.title}
-                                        src={baseUrl + imageUrl}
-                                    />
-                                </div>
-                            );
-                        })}
-
-                    </div>
-                </div>
+                    return (
+                        <img
+                            key={element?.documentId}
+                            src={baseUrl + imageUrl}
+                            alt={item?.title}
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                    );
+                })}
             </div>
-            <div className="p-2 relative">
-                <p className="font-sans antialiased leading-snug text-black text-xs tracking-normal text-blue-gray-900">
-                    {new Date(item?.StartDate).toDateString()}
+
+            {/* Content */}
+            <div className="p-4 flex flex-col justify-between flex-grow">
+                <p className="text-xs text-gray-500 mb-1">
+                    {new Date(item?.StartDate).toLocaleDateString(undefined, {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                    })}
+                </p>
+
+                <h3 className="text-sm font-semibold text-gray-800 mb-2 line-clamp-2">
+                    {item?.title}
+                </h3>
+
+                <p className="text-sm text-gray-600 line-clamp-2">
+                    {item?.contentPreview}
                 </p>
             </div>
-            <div className="p-2 relative">
-                <h5 className="block font-sans text-[15px] antialiased font-bold text-gray-800 leading-snug tracking-normal text-blue-gray-900">
-                    {item?.title}
-                </h5>
-            </div>
-            <div className="p-1 mb-2 line-clamp-2 max-h-[calc(2*1.25rem)] align-bottom">
-                <p className="text-[13px]" >{item?.contentPreview}</p>
-            </div>
         </a>
-    </div>);
+    </div>
+    );
 }

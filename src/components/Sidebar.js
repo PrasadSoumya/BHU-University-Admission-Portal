@@ -184,7 +184,7 @@ export default function Sidebar({ locale }) {
     const visibleLevel = selectedLevel?.visibleLevel || '';
 
     return (
-        <section className="p-2 bg-gray-500 font-sans grid grid-cols-1 md:grid-cols-12 gap-4" aria-label="Program Information Navigator">
+        <section className="p-2 bg-gradient-to-b from-slate-800 to-slate-900 font-sans grid grid-cols-1 md:grid-cols-12 gap-4" aria-label="Program Information Navigator">
             <aside className="col-span-12 md:col-span-2 bg-white border rounded-lg p-4 shadow-sm mb-4 md:mb-0" aria-label={t.programNavigator}>
                 <h2 className="text-2xl font-bold mb-6 text-gray-800">{t.programNavigator}</h2>
                 <nav aria-label="Program Types and Levels">

@@ -23,7 +23,7 @@ export default function Dashboard({ locale }) {
     const t = translations[locale === "hi-IN" ? "hi-IN" : "en"];
 
     return (
-        <main className="bg-gradient-to-br from-slate-600 to-slate-200 p-2" aria-label={t.mainContentLabel}>
+        <main className="bg-gradient-to-b from-slate-800 to-slate-900 p-2" aria-label={t.mainContentLabel}>
             <div className="max-w-full grid grid-cols-1 lg:grid-cols-4 gap-y-4 gap-x-2 items-stretch">
                 <section className="lg:col-span-3 flex flex-col h-full" aria-labelledby="about-us-heading">
                     <h2 id="about-us-heading" className="sr-only">About Us Content</h2>
