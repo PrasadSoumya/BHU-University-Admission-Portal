@@ -84,6 +84,7 @@ export default function ProgramDetails({ programType, level, visibleProgramType,
                         programmeType: { eq: $programmeType },
                         level: { eq: $level },
                         programmeStatus: { eq: "ACTIVE" },
+                        department : { name : { not : { containsi : "Paid Fee Course"} }}
                         or: [
                             { titleEnglish: { containsi: $searchTerm } },
                             { department: { name: { containsi: $searchTerm } } },
@@ -239,6 +240,19 @@ export default function ProgramDetails({ programType, level, visibleProgramType,
                             ))}
                         </tbody>
                     </table>
+                    <div className="flex flex-col sm:flex-row justify-between items-center px-4 py-3 bg-gray-50 border-t border-gray-200 text-sm text-gray-700">
+                        <div className="mb-2 sm:mb-0">
+                            {t.showingPrograms} {(pageInfo.page - 1) * pageInfo.pageSize + 1}
+                            &nbsp;{t.of}&nbsp;
+                            {Math.min(pageInfo.page * pageInfo.pageSize, pageInfo.total)} {t.programs}
+                        </div>
+                        <div className="mb-2 sm:mb-0">
+                            {t.pageOf} {pageInfo.page} {t.pageOf} {pageInfo.pageCount}
+                        </div>
+                        <div>
+                            Total: {pageInfo.total} {t.programs}
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

@@ -115,19 +115,19 @@ export default function RecentEvent({ locale }) {
 
   return (
     <section
-      className="px-4 py-10 sm:px-8 lg:px-12 bg-gradient-to-b from-slate-800 to-slate-900 text-white"
+      className="px-4 py-10 sm:px-8 lg:px-12 bg-gradient-to-b from-slate-500 to-slate-700 text-white"
       aria-label={t.activities}
     >
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-white/20 pb-6 mb-8">
-        <h2 className="text-3xl sm:text-4xl font-extrabold tracking-wide uppercase">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b-2 border-white pb-2 mb-4">
+        <h2 className="text-3xl sm:text-4xl font-bold tracking-wide uppercase">
           {t.activities}
         </h2>
         <a
           href={process.env.NEXT_PUBLIC_NEWS_PORTAL + "/activities"}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 md:mt-0 inline-flex items-center gap-2 text-white border border-white/30 hover:border-white hover:bg-white/10 hover:text-white transition-all duration-200 px-5 py-2.5 rounded-lg text-sm font-medium backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-white/50"
+          className="mt-4 md:mt-0 inline-flex items-center gap-2 text-white border-2 border-white hover:border-white hover:bg-white/10 hover:text-white transition-all duration-200 px-5 py-2.5 rounded-lg text-sm font-medium backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-white/50"
         >
           {t.viewMore}
           <svg

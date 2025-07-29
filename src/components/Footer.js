@@ -229,37 +229,38 @@ export default function Footer({ locale }) {
                 </div>
               </div>
 
-              <div className="lg:col-span-4 mt-8">
-                <nav aria-label="Footer Policy Links">
-                  <ul className="flex flex-wrap justify-center gap-2 text-xs">
-                    {[
-                      { href: `/${locale}/copyright-policy`, label: t.copyrightPolicy },
-                      { href: `/${locale}/hyperlinking-policy`, label: t.hyperlinkingPolicy },
-                      { href: `/${locale}/terms-conditions`, label: t.termsOfUse },
-                      { href: `/${locale}/privacy-policy`, label: t.privacyPolicy },
-                      { href: `/${locale}/disclaimer`, label: t.disclaimer },
-                      { href: `/${locale}/help`, label: t.help },
-                    ].map(({ href, label }, i) => (
-                      <li key={i}>
-                        <a
-                          href={href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="bg-slate-800 hover:bg-indigo-700 text-gray-300 hover:text-white px-3 py-1 rounded-full transition text-xs font-medium"
-                        >
-                          {label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
-              </div>
+
             </>
           )}
         </div>
 
-        <div className="border-t border-slate-600 pt-6 mt-10 text-xs text-slate-400 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="border-t border-slate-600 mt-8 text-xs  flex flex-col md:flex-row justify-between items-center">
           <p className="text-center md:text-left">{t.copyright}</p>
+          <div className="lg:col-span-4">
+            <nav aria-label="Footer Policy Links">
+              <ul className="flex flex-wrap justify-center gap-2 text-xs">
+                {[
+                  { href: `/${locale}/copyright-policy`, label: t.copyrightPolicy },
+                  { href: `/${locale}/hyperlinking-policy`, label: t.hyperlinkingPolicy },
+                  { href: `/${locale}/terms-conditions`, label: t.termsOfUse },
+                  { href: `/${locale}/privacy-policy`, label: t.privacyPolicy },
+                  { href: `/${locale}/disclaimer`, label: t.disclaimer },
+                  { href: `/${locale}/help`, label: t.help },
+                ].map(({ href, label }, i) => (
+                  <li key={i}>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:bg-indigo-700 text-white hover:text-white px-3 py-1 rounded-full transition text-xm font-medium"
+                    >
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
           <div className="text-center md:text-right">
             <VisitorCounter />
           </div>

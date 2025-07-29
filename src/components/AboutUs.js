@@ -165,7 +165,7 @@ export default function AboutUs({ locale }) {
                                         .map((member, idx) => (
                                             <div
                                                 key={idx}
-                                                className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out"
+                                                className="bg-white hover:shadow-lg transition-shadow duration-300 ease-in-out"
                                             >
                                                 {renderMemberCard(member)}
                                             </div>
