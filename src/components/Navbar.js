@@ -38,8 +38,8 @@ export default function Navbar({ locale }) {
         },
         "hi-IN": {
             visitBHU: "बीएचयू की आधिकारिक वेबसाइट पर जाएं",
-            english: "अंग्रेज़ी", 
-            hindi: "हिंदी", 
+            english: "अंग्रेज़ी",
+            hindi: "हिंदी",
             loadingNavbar: "नेविगेशन लोड हो रहा है...",
             errorNavbar: "नेविगेशन डेटा लोड करने में त्रुटि!",
             smaller: "पाठ छोटा करें",
@@ -148,7 +148,13 @@ export default function Navbar({ locale }) {
     const resetFontSize = () => setFontSize(16);
 
     const activateScreenReader = () => {
-        alert("Screen Reader functionality would be activated here.");
+        alert(
+            `🧏‍♂️ How to Start Your Screen Reader\n\n` +
+            `🪟 Windows:\nCtrl + Windows + Enter (Narrator)\n\n` +
+            `🍏 macOS:\nCmd + F5 (VoiceOver)\n\n` +
+            `📱 iPhone/iPad:\nSettings > Accessibility > VoiceOver\n\n` +
+            `🤖 Android:\nSettings > Accessibility > TalkBack`
+        );
     };
 
     return (
@@ -253,7 +259,7 @@ export default function Navbar({ locale }) {
                         <div className="flex-shrink-0">
                             <a href={`/${locale}`} aria-label="Home" className="block">
                                 <img
-                                    src={process.env.NEXT_PUBLIC_STRAPI_API_URL+"/uploads/logo_big_3_small_843dd9d936.png"}
+                                    src={process.env.NEXT_PUBLIC_STRAPI_API_URL + "/uploads/logo_big_3_small_843dd9d936.png"}
                                     alt={t.bhuLogo}
                                     className="h-16" /* Adjusted height for mobile top row */
                                 />
@@ -283,7 +289,7 @@ export default function Navbar({ locale }) {
                         <div className="flex-shrink-0 mr-8">
                             <a href={`/${locale}`} aria-label="Home" className="block">
                                 <img
-                                    src={process.env.NEXT_PUBLIC_STRAPI_API_URL+"/uploads/logo_big_3_small_843dd9d936.png"}
+                                    src={process.env.NEXT_PUBLIC_STRAPI_API_URL + "/uploads/logo_big_3_small_843dd9d936.png"}
                                     alt={t.bhuLogo}
                                     className="h-20"
                                 />
@@ -307,12 +313,12 @@ export default function Navbar({ locale }) {
 
                     {isOpen && (
                         <div id="mobile-menu" className="fixed inset-0 bg-slate-700 bg-opacity-95 flex flex-col z-1050 p-2" role="menu">
-                            <div className="flex items-center justify-between w-full"> 
+                            <div className="flex items-center justify-between w-full">
                                 <a href={`/${locale}`} onClick={toggleMenu} aria-label="Home">
                                     <img
-                                        src={process.env.NEXT_PUBLIC_STRAPI_API_URL+"/uploads/logo_big_3_small_843dd9d936.png"}
+                                        src={process.env.NEXT_PUBLIC_STRAPI_API_URL + "/uploads/logo_big_3_small_843dd9d936.png"}
                                         alt={t.bhuLogo}
-                                        className="h-20 " 
+                                        className="h-20 "
                                     />
                                 </a>
                                 <button

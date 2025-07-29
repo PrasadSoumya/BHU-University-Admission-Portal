@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-export default function BannerCarousel({ locale }) {
+export default function BannerCarousel({ locale = 'en' }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -18,7 +18,7 @@ export default function BannerCarousel({ locale }) {
       noBanners: "No banners available.",
       prevSlide: "Previous Slide",
       nextSlide: "Next Slide",
-      bannerImageAlt: "Banner image for: "
+      bannerImageAlt: "Banner image for: ",
     },
     "hi-IN": {
       loading: "बैनर लोड हो रहे हैं...",
@@ -26,7 +26,7 @@ export default function BannerCarousel({ locale }) {
       noBanners: "कोई बैनर उपलब्ध नहीं है।",
       prevSlide: "पिछली स्लाइड",
       nextSlide: "अगली स्लाइड",
-      bannerImageAlt: "बैनर चित्र इसके लिए: "
+      bannerImageAlt: "बैनर चित्र इसके लिए: ",
     }
   };
 
@@ -61,7 +61,7 @@ export default function BannerCarousel({ locale }) {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + strapiToken,
+            'Authorization': `Bearer ${strapiToken}`,
           },
           body: JSON.stringify({ query: GET_BANNERS_QUERY, variables: { locale } }),
         });
@@ -73,6 +73,8 @@ export default function BannerCarousel({ locale }) {
         }
 
         const json = await response.json();
+        console.log("GraphQL response:", json);
+
         if (json.errors) {
           console.error("GraphQL Errors:", json.errors);
           throw new Error(`GraphQL Errors: ${JSON.stringify(json.errors)}`);
@@ -87,6 +89,7 @@ export default function BannerCarousel({ locale }) {
       }
     };
 
+    console.log("Current locale:", locale);
     fetchBanners();
   }, [baseApiUrl, locale, strapiToken]);
 
@@ -112,6 +115,8 @@ export default function BannerCarousel({ locale }) {
       };
     }) || [];
 
+  console.log("Mapped banners:", banners);
+
   useEffect(() => {
     if (banners.length <= 1) return;
     const interval = setInterval(() => {
@@ -121,10 +126,12 @@ export default function BannerCarousel({ locale }) {
   }, [banners.length]);
 
   const handlePrev = () => {
+    console.log("Previous clicked");
     setActiveIndex(prev => (prev - 1 + banners.length) % banners.length);
   };
 
   const handleNext = () => {
+    console.log("Next clicked");
     setActiveIndex(prev => (prev + 1) % banners.length);
   };
 
@@ -156,11 +163,9 @@ export default function BannerCarousel({ locale }) {
 
   return (
     <section
-      className="relative w-full h-[70vh] sm:h-[50vh] md:h-[70vh] lg:h-[70vh] xl:h-[70vh] overflow-hidden z-0"
-      role="region"
+      className="relative w-full h-[40vh] sm:h-[35vh] md:h-[45vh] lg:h-[50vh] xl:h-[50vh] overflow-hidden z-0" role="region"
       aria-label="Image Carousel"
     >
-
       <div
         className="relative w-full h-full"
         role="group"
@@ -178,12 +183,12 @@ export default function BannerCarousel({ locale }) {
             <img
               src={activeSlide.image}
               alt={`${t.bannerImageAlt} ${activeSlide.title}`}
-              className="absolute top-0 left-0 w-full h-full object-fit z-10"
+              className="absolute top-0 left-0 w-full h-full object-cover z-10"
               aria-current="true"
-              loading="eager" // First banner is eager, subsequent can be lazy if preloaded
+              loading="eager"
             />
           </picture>
-          <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30 z-15"></div>
+          <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30 z-15 pointer-events-none"></div>
 
           <div className="relative z-20 flex flex-col items-center justify-center h-full text-center text-white px-4 animate-fade-in">
             <h1 className="text-2xl md:text-4xl font-bold mb-4">{activeSlide.title}</h1>
@@ -206,7 +211,7 @@ export default function BannerCarousel({ locale }) {
           <>
             <button
               onClick={handlePrev}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-80 z-10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-80 z-30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               aria-label={t.prevSlide}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -216,7 +221,7 @@ export default function BannerCarousel({ locale }) {
 
             <button
               onClick={handleNext}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-80 z-10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-80 z-30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               aria-label={t.nextSlide}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -224,8 +229,7 @@ export default function BannerCarousel({ locale }) {
               </svg>
             </button>
 
-            {/* Pagination dots (optional but good for accessibility) */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-30 flex space-x-2">
               {banners.map((_, index) => (
                 <button
                   key={index}
