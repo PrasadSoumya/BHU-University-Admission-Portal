@@ -188,8 +188,8 @@ export default function BannerCarousel({ locale = 'en' }) {
           <picture>
             <source media="(min-width: 1024px)" srcSet={activeSlide.image.original} />
             <source media="(min-width: 640px)" srcSet={activeSlide.image.medium || activeSlide.image.large || activeSlide.image.original} />
-            <source media="(min-width: 480px)" srcSet={activeSlide.image.small || activeSlide.image.medium || activeSlide.image.large || activeSlide.image.original} />
-            <source media="(max-width: 479px)" srcSet={activeSlide.image.xsmall || activeSlide.image.thumbnail || activeSlide.image.small || activeSlide.image.medium || activeSlide.image.large || activeSlide.image.original} />
+            <source media="(min-width: 480px)" srcSet={activeSlide.image.medium || activeSlide.image.large || activeSlide.image.original} />
+            <source media="(max-width: 479px)" srcSet={activeSlide.image.medium || activeSlide.image.small || activeSlide.image.medium || activeSlide.image.large || activeSlide.image.original} />
             <img
               src={activeSlide.image.original}
               alt={`${t.bannerImageAlt} ${activeSlide.title}`}
