@@ -44,6 +44,7 @@ export default function BannerCarousel({ locale = 'en' }) {
             order
             image {
               url
+              formats
             }
             buttonTitle
             buttonUrl
@@ -111,7 +112,14 @@ export default function BannerCarousel({ locale = 'en' }) {
         description: item.description,
         buttonText: item.buttonTitle,
         buttonUrl: item.buttonUrl,
-        image: imageUrl,
+        image: {
+          original: item.image?.url ? new URL(item.image.url, baseAssetUrl).href : '',
+          large: item.image?.formats?.large?.url ? new URL(item.image.formats.large.url, baseAssetUrl).href : '',
+          medium: item.image?.formats?.medium?.url ? new URL(item.image.formats.medium.url, baseAssetUrl).href : '',
+          small: item.image?.formats?.small?.url ? new URL(item.image.formats.small.url, baseAssetUrl).href : '',
+          thumbnail: item.image?.formats?.thumbnail?.url ? new URL(item.image.formats.thumbnail.url, baseAssetUrl).href : '',
+          xsmall: item.image?.formats?.xsmall?.url ? new URL(item.image.formats.xsmall.url, baseAssetUrl).href : '',
+        },
       };
     }) || [];
 
@@ -178,10 +186,12 @@ export default function BannerCarousel({ locale = 'en' }) {
           aria-atomic="true"
         >
           <picture>
-            <source media="(min-width: 1024px)" srcSet={activeSlide.image} />
-            <source media="(min-width: 640px)" srcSet={activeSlide.image} />
+            <source media="(min-width: 1024px)" srcSet={activeSlide.image.original} />
+            <source media="(min-width: 640px)" srcSet={activeSlide.image.medium || activeSlide.image.large || activeSlide.image.original} />
+            <source media="(min-width: 480px)" srcSet={activeSlide.image.small || activeSlide.image.medium || activeSlide.image.large || activeSlide.image.original} />
+            <source media="(max-width: 479px)" srcSet={activeSlide.image.xsmall || activeSlide.image.thumbnail || activeSlide.image.small || activeSlide.image.medium || activeSlide.image.large || activeSlide.image.original} />
             <img
-              src={activeSlide.image}
+              src={activeSlide.image.original}
               alt={`${t.bannerImageAlt} ${activeSlide.title}`}
               className="absolute top-0 left-0 w-full h-full object-cover z-10"
               aria-current="true"
