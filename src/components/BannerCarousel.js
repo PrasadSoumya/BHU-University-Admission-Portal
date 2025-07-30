@@ -1,5 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
+import Image from 'next/image'; // ✅ Use Next.js Image
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 export default function BannerCarousel({ locale = 'en' }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -38,16 +41,12 @@ export default function BannerCarousel({ locale = 'en' }) {
         banners_connection(
           filters: { isActive: { eq: true }, locale: { eq: $locale } }
         ) {
-          nodes {
-            title
-            description
+          nodes {                        
             order
             image {
               url
               formats
-            }
-            buttonTitle
-            buttonUrl
+            }                        
             isActive
           }
         }
@@ -90,7 +89,6 @@ export default function BannerCarousel({ locale = 'en' }) {
       }
     };
 
-    console.log("Current locale:", locale);
     fetchBanners();
   }, [baseApiUrl, locale, strapiToken]);
 
@@ -108,10 +106,6 @@ export default function BannerCarousel({ locale = 'en' }) {
 
       return {
         id: index,
-        title: item.title,
-        description: item.description,
-        buttonText: item.buttonTitle,
-        buttonUrl: item.buttonUrl,
         image: {
           original: item.image?.url ? new URL(item.image.url, baseAssetUrl).href : '',
           large: item.image?.formats?.large?.url ? new URL(item.image.formats.large.url, baseAssetUrl).href : '',
@@ -123,7 +117,6 @@ export default function BannerCarousel({ locale = 'en' }) {
       };
     }) || [];
 
-  console.log("Mapped banners:", banners);
 
   useEffect(() => {
     if (banners.length <= 1) return;
@@ -171,7 +164,8 @@ export default function BannerCarousel({ locale = 'en' }) {
 
   return (
     <section
-      className="relative w-full h-[40vh] sm:h-[35vh] md:h-[45vh] lg:h-[50vh] xl:h-[50vh] overflow-hidden z-0" role="region"
+      className="relative w-full z-30 h-[200px] sm:h-[240px] md:h-[300px] lg:h-[320px] xl:h-[360px] overflow-hidden"
+      role="region"
       aria-label="Image Carousel"
     >
       <div
@@ -180,71 +174,48 @@ export default function BannerCarousel({ locale = 'en' }) {
         aria-roledescription="carousel"
         aria-label="Dynamic Banners"
       >
-        <div
-          className="absolute top-0 left-0 w-full h-full transition-opacity duration-700 ease-in-out"
-          aria-live="polite"
-          aria-atomic="true"
-        >
-          <picture>
-            <source media="(min-width: 1024px)" srcSet={activeSlide.image.original} />
-            <source media="(min-width: 640px)" srcSet={activeSlide.image.medium || activeSlide.image.large || activeSlide.image.original} />
-            <source media="(min-width: 480px)" srcSet={activeSlide.image.medium || activeSlide.image.large || activeSlide.image.original} />
-            <source media="(max-width: 479px)" srcSet={activeSlide.image.medium || activeSlide.image.small || activeSlide.image.medium || activeSlide.image.large || activeSlide.image.original} />
-            <img
-              src={activeSlide.image.original}
-              alt={`${t.bannerImageAlt} ${activeSlide.title}`}
-              className="absolute top-0 left-0 w-full h-full object-cover z-10"
-              aria-current="true"
-              loading="eager"
-            />
-          </picture>
-          <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30 z-15 pointer-events-none"></div>
-
-          <div className="relative z-20 flex flex-col items-center justify-center h-full text-center text-white px-4 animate-fade-in">
-            <h1 className="text-2xl md:text-4xl font-bold mb-4">{activeSlide.title}</h1>
-            <p className="text-lg md:text-xl mb-6">{activeSlide.description}</p>
-            {activeSlide.buttonUrl && activeSlide.buttonText && (
-              <a
-                href={activeSlide.buttonUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#a54417] hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded-xl transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-                aria-label={`${activeSlide.buttonText} (opens in new tab)`}
-              >
-                {activeSlide.buttonText}
-              </a>
-            )}
-          </div>
+        <div className="relative w-full h-full">
+          <Image
+            src={activeSlide.image.original}
+            alt={`${t.bannerImageAlt} ${activeSlide.title || ''}`}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover transition-opacity duration-700 ease-in-out"
+          />
+          <div className="absolute inset-0  bg-opacity-30 z-10" />
         </div>
 
+        {/* Navigation Buttons */}
         {banners.length > 1 && (
           <>
             <button
               onClick={handlePrev}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-80 z-30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/60 text-white rounded-full p-2 hover:bg-black/80 z-20 focus:outline-none focus:ring-2 focus:ring-white"
               aria-label={t.prevSlide}
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
 
             <button
               onClick={handleNext}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-80 z-30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/60 text-white rounded-full p-2 hover:bg-black/80 z-20 focus:outline-none focus:ring-2 focus:ring-white"
               aria-label={t.nextSlide}
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </button>
 
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-30 flex space-x-2">
+            {/* Indicators */}
+            <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
               {banners.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setActiveIndex(index)}
-                  className={`w-3 h-3 rounded-full ${activeIndex === index ? 'bg-white' : 'bg-gray-400'} hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white`}
+                  className={`w-2.5 h-2.5 rounded-full ${activeIndex === index ? 'bg-white' : 'bg-gray-400'} hover:bg-white transition-colors`}
                   aria-label={`Go to slide ${index + 1}`}
                   aria-current={activeIndex === index ? 'true' : 'false'}
                 />
