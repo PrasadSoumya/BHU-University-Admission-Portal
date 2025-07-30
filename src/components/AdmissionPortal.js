@@ -96,6 +96,7 @@ export default function AdmissionPortal({ locale = 'en' }) {
 
     const banners = data?.banners_connection?.nodes
         ?.filter(item => item.isActive)
+        ?.sort((a, b) => (a.order ?? 0) - (b.order ?? 0)) // Sort based on 'order'
         ?.map((item, index) => {
             let imageUrl = "";
             if (baseAssetUrl && item.image?.url) {
@@ -124,23 +125,9 @@ export default function AdmissionPortal({ locale = 'en' }) {
         }) || [];
 
 
-    useEffect(() => {
-        if (banners.length <= 1) return;
-        const interval = setInterval(() => {
-            setActiveIndex(prev => (prev + 1) % banners.length);
-        }, 5000);
-        return () => clearInterval(interval);
-    }, [banners.length]);
 
-    const handlePrev = () => {
-        console.log("Previous clicked");
-        setActiveIndex(prev => (prev - 1 + banners.length) % banners.length);
-    };
 
-    const handleNext = () => {
-        console.log("Next clicked");
-        setActiveIndex(prev => (prev + 1) % banners.length);
-    };
+
 
     if (loading) {
         return (
