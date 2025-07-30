@@ -34,8 +34,8 @@ export default function ProgramDetails({ programType, level, visibleProgramType,
             minDuration: "Min Duration (Months)",
             showingPrograms: "Showing",
             of: "of",
-            programs: "programs. Page",
-            pageOf: "of",
+            programs: "programs.",
+            pageOf: "Page of",
             paginationPrev: "Previous page",
             paginationNext: "Next page",
             paginationGoTo: "Go to page"
@@ -60,7 +60,7 @@ export default function ProgramDetails({ programType, level, visibleProgramType,
             minDuration: "न्यूनतम अवधि (महीनों में)",
             showingPrograms: "दिखा रहा है",
             of: "में से",
-            programs: "प्रोग्राम। पृष्ठ",
+            programs: "प्रोग्राम।",
             pageOf: "का",
             paginationPrev: "पिछला पृष्ठ",
             paginationNext: "अगला पृष्ठ",
@@ -181,7 +181,6 @@ export default function ProgramDetails({ programType, level, visibleProgramType,
                     {t.pageHeading} <span className="text-purple-700">{visibleProgramType}</span> - <span className="text-purple-700">{visibleLevel}</span>
                 </h2>
 
-                {/* Search Bar with Button */}
                 <div className="mb-6 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
                     <div className="flex items-center space-x-2">
                         <label htmlFor="itemsPerPage" className="text-gray-700 text-sm font-medium">{t.show}</label>
@@ -196,24 +195,25 @@ export default function ProgramDetails({ programType, level, visibleProgramType,
                         <span className="text-gray-700 text-sm">{t.entries}</span>
                     </div>
 
-                    <div className="flex w-full sm:max-w-md space-x-2">
+                    <div className="flex flex-col sm:flex-row w-full sm:max-w-md space-y-2 sm:space-y-0 sm:space-x-2">
                         <input
                             type="text"
                             placeholder={t.searchPlaceholder}
                             value={tempSearchTerm}
                             onChange={(e) => setTempSearchTerm(e.target.value)}
-                            className="flex-grow p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+                            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
                         />
                         <button
                             onClick={() => {
                                 setSearchTerm(tempSearchTerm);
                                 setCurrentPage(1);
                             }}
-                            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+                            className="w-full sm:w-auto px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
                         >
                             {t.searchButton}
                         </button>
                     </div>
+
                 </div>
 
                 {/* Results Table */}
@@ -247,7 +247,7 @@ export default function ProgramDetails({ programType, level, visibleProgramType,
                             {Math.min(pageInfo.page * pageInfo.pageSize, pageInfo.total)} {t.programs}
                         </div>
                         <div className="mb-2 sm:mb-0">
-                            {t.pageOf} {pageInfo.page} {t.pageOf} {pageInfo.pageCount}
+                            {t.pageOf} {pageInfo.page} {t.of} {pageInfo.pageCount}
                         </div>
                         <div>
                             Total: {pageInfo.total} {t.programs}
