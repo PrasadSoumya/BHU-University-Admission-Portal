@@ -123,7 +123,7 @@ export default function Footer({ locale }) {
   }, [graphqlApiUrl, locale, strapiToken]);
 
   return (
-    <footer className="bg-gradient-to-tr from-slate-800 via-slate-700 to-slate-900 text-gray-200 px-6 py-12 shadow-inner border-t border-slate-600" role="contentinfo" aria-label="Site Footer">
+    <footer className="bg-gradient-to-tr from-slate-900 via-slate-800 to-slate-900 text-gray-200 px-6 py-12 shadow-inner border-t border-slate-600" role="contentinfo" aria-label="Site Footer">
       <div className=" mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
           {loading && (
@@ -217,7 +217,7 @@ export default function Footer({ locale }) {
                   </h3>
                   <div className="rounded-lg overflow-hidden shadow-lg backdrop-blur-sm border border-slate-500">
                     <iframe
-                      className="w-full h-48"
+                      className="w-full h-32"
                       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.1777879514166!2d82.9925116!3d25.2646041!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398e3180c35aa449%3A0xc58ce99f4cf2c162!2sCentral%20Office!5e0!3m2!1sen!2sin!4v1752827690831!5m2!1sen!2sin"
                       allowFullScreen
                       loading="lazy"

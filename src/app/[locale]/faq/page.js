@@ -100,7 +100,7 @@ export default function FaqPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 to-blue-200 px-4 py-12 font-sans">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-extrabold text-center text-indigo-800 mb-10">
+        <h1 className="text-3xl font-extrabold text-center text-indigo-800 mb-10">
           {t.title}
         </h1>
 

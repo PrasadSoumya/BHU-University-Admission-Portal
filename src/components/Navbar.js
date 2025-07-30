@@ -171,14 +171,14 @@ export default function Navbar({ locale }) {
                 </header>
             )}
             {!loading && !error && (
-                <header className="bg-slate-900 text-gray-800 py-4 px-4 md:px-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between">
+                <header className="bg-slate-900 text-gray-800 py-2 px-2 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between">
                     {/* Logo */}
-                    <div className="flex justify-between items-center w-full md:w-auto mb-4 md:mb-0">
+                    <div className="flex justify-between items-center w-full md:w-auto  md:mb-0">
                         <a href={`/${locale}`} aria-label="Home">
                             <img
                                 src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/uploads/logo_big_3_small_843dd9d936.png`}
                                 alt={t.bhuLogo}
-                                className="h-24 w-auto object-contain"
+                                className="h-20 w-auto object-contain"
                             />
                         </a>
 
@@ -206,72 +206,85 @@ export default function Navbar({ locale }) {
                         </button>
                     </div>
 
-                    <div className="hidden md:flex flex-col flex-grow space-y-2 w-full">
-                        <div className="flex justify-end items-center gap-1 flex-wrap text-sm">
+                    <div className="hidden md:flex flex-col flex-grow space-y-1 w-full">
+                        <div className="flex justify-end items-center gap-1.5 h-6 flex-wrap text-sm">
+                            {/* Visit BHU Website */}
                             <a
                                 href="https://bhu.ac.in"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold py-2 px-4 rounded-full shadow hover:shadow-lg transition transform hover:scale-105"
+                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-white text-xs bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 transition shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
                                 aria-label={`${t.visitBHU} (opens in new tab)`}
                             >
-                                <FaGlobe className="inline-block mr-1" />
+                                <FaGlobe className="text-xs" />
                                 {t.visitBHU}
                             </a>
 
-                            <button
-                                onClick={() => handleLanguageChange('en')}
-                                className={`px-3 py-1.5 rounded-lg border font-medium transition flex items-center gap-1 ${locale === 'en'
-                                    ? 'bg-blue-600 text-white shadow'
-                                    : 'bg-white text-gray-700 hover:bg-gray-100'}`}
-                                aria-label={t.english}
-                            >
-                                <MdLanguage />
-                                {t.english}
-                            </button>
-                            <button
-                                onClick={() => handleLanguageChange('hi-IN')}
-                                className={`px-3 py-1.5 rounded-lg border font-medium transition flex items-center gap-1 ${locale === 'hi-IN'
-                                    ? 'bg-blue-600 text-white shadow'
-                                    : 'bg-white text-gray-700 hover:bg-gray-100'}`}
-                                aria-label={t.hindi}
-                            >
-                                <MdLanguage />
-                                {t.hindi}
-                            </button>
+                            {/* Language Switch */}
+                            {['en', 'hi-IN'].map((lang) => (
+                                <button
+                                    key={lang}
+                                    onClick={() => handleLanguageChange(lang)}
+                                    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded border text-xs font-medium transition ${locale === lang
+                                        ? 'bg-blue-600 text-white border-blue-700 shadow focus:ring-blue-500'
+                                        : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
+                                        } focus:outline-none focus:ring-2 focus:ring-offset-2`}
+                                    aria-label={lang === 'en' ? t.english : t.hindi}
+                                >
+                                    <MdLanguage className="text-sm" />
+                                    {lang === 'en' ? t.english : t.hindi}
+                                </button>
+                            ))}
 
-                            {/* Font Tools */}
-                            <button onClick={decreaseFontSize} className="px-2 py-1.5 bg-white border rounded hover:bg-gray-100" title={t.smaller} aria-label={t.smaller}>
-                                <FaMinus />
-                            </button>
-                            <button onClick={resetFontSize} className="px-2 py-1.5 bg-white border rounded hover:bg-gray-100" title={t.reset} aria-label={t.reset}>
-                                <BiReset />
-                            </button>
-                            <button onClick={increaseFontSize} className="px-2 py-1.5 bg-white border rounded hover:bg-gray-100" title={t.larger} aria-label={t.larger}>
-                                <FaPlus />
-                            </button>
+                            {/* Font Size Controls */}
+                            {[{ icon: <FaMinus />, action: decreaseFontSize, label: t.smaller },
+                            { icon: <BiReset />, action: resetFontSize, label: t.reset },
+                            { icon: <FaPlus />, action: increaseFontSize, label: t.larger }]
+                                .map(({ icon, action, label }, idx) => (
+                                    <button
+                                        key={idx}
+                                        onClick={action}
+                                        className="px-1.5 py-0.5 text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                                        title={label}
+                                        aria-label={label}
+                                    >
+                                        {icon}
+                                    </button>
+                                ))}
 
                             {/* Screen Reader */}
-                            <button onClick={activateScreenReader} className="px-3 py-1.5 bg-white border rounded hover:bg-gray-100 flex items-center gap-1" title={t.screenReader} aria-label={t.screenReader}>
-                                <FaVideo />
-                                <span className="hidden lg:inline">{t.screenReader}</span>
+                            <button
+                                onClick={activateScreenReader}
+                                className="inline-flex items-center gap-1 px-1.5  py-0.5 text-xs bg-white order border-gray-300 rounded text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                                title="Screen Reader Instructions"
+                                aria-label="Screen Reader Instructions"
+                            >
+                                <FaVideo className="text-sm" />
+                                <span className="hidden lg:inline">Screen Reader</span>
                             </button>
                         </div>
 
+
                         {/* Main Nav Links */}
-                        <nav className="flex justify-center flex-wrap gap-10 font-semibold uppercase text-sm text-gray-100 w-full pt-4 border-t border-slate-800">
-                            {navigationItems.map(link => (
-                                <a
-                                    key={link.id}
-                                    href={link.enums === 'external' ? link.url : `/${locale}${link.url}`}
-                                    target={link.enums === 'external' ? '_blank' : undefined}
-                                    rel={link.enums === 'external' ? 'noopener noreferrer' : undefined}
-                                    className="text-white hover:text-orange-500 transition-transform transform hover:scale-105"
-                                >
-                                    {link.Title}
-                                </a>
-                            ))}
-                        </nav>
+                        <section className="flex flex-col min-h-full">
+                            <header className="bg-slate-900 text-gray-800 py-4 px-4 md:px-8 shadow-sm  flex flex-col flex-grow">
+
+                                <nav className="mt-auto flex justify-center flex-wrap gap-10 font-semibold uppercase text-sm text-gray-100 w-full border-t border-slate-500 pt-4">
+                                    {navigationItems.map(link => (
+                                        <a
+                                            key={link.id}
+                                            href={link.enums === 'external' ? link.url : `/${locale}${link.url}`}
+                                            target={link.enums === 'external' ? '_blank' : undefined}
+                                            rel={link.enums === 'external' ? 'noopener noreferrer' : undefined}
+                                            className="text-white hover:text-orange-500 transition-transform transform hover:scale-110"
+                                        >
+                                            {link.Title}
+                                        </a>
+                                    ))}
+                                </nav>
+                            </header>
+                        </section>
+
                     </div>
 
                     {/* Mobile Menu: nav + tools */}

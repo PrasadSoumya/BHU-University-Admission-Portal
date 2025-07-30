@@ -154,7 +154,7 @@ export default function NoticeDetails() {
     const dateLocale = locale === "hi-IN" ? "hi-IN" : "en-GB";
 
     return (
-        <div className="p-6 bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen font-sans text-gray-800">
+        <div className="p-2 bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen font-sans  text-gray-800">
             <div className="max-w-full min-h-screen bg-white rounded-xl shadow-2xl p-8">
                 <h1 className="text-3xl font-extrabold text-indigo-800 mb-4">{notice.title}</h1>
                 <p className="text-sm text-gray-600 mb-6 flex flex-wrap gap-x-4 gap-y-2">
