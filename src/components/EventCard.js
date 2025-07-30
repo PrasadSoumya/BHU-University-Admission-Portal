@@ -31,7 +31,7 @@ export default function EventCard({ item, image }) {
                     return (
                         <img
                             key={element?.documentId}
-                            src={baseUrl + imageUrl}
+                            src={baseUrl + element.url}
                             alt={item?.title}
                             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                         />
