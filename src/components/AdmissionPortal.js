@@ -166,23 +166,31 @@ export default function AdmissionPortal({ locale = 'en' }) {
         );
     }
 
-
-
     return (
-        <section class="bg-gradient-to-b from-slate-500 to-slate-600  py-4 px-4 ">
-            <div class="mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-
-                {banners?.map(item => {
-                    return <div class="bg-white shadow-md rounded-lg p-3 text-center flex flex-col justify-center">
-                        <p class="text-sm font-semibold mb-1">{item.title}</p>
-                        <a href={item.buttonUrl} target='_blank' class="text-sm font-semibold text-white bg-orange-500 px-2 py-1 rounded-md cursor-pointer hover:bg-orange-600 transition duration-300 w-fit mx-auto">
-                            {item.buttonText}
-                        </a>
-                    </div>
-                })}
-
-
+        <section className="bg-gradient-to-b from-slate-500 to-slate-600 py-8 px-4">
+            <div className="flex justify-center">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+                    {banners?.map((item, index) => (
+                        <div
+                            key={index}
+                            className="bg-white shadow-lg rounded-xl p-4 flex flex-col items-center justify-between text-center transition-transform transform hover:-translate-y-1 hover:shadow-xl"
+                        >
+                            <p className="text-base font-semibold text-gray-800 mb-3">{item.title}</p>
+                            <div className="mt-auto">
+                                <a
+                                    href={item.buttonUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-full transition duration-300"
+                                >
+                                    {item.buttonText}
+                                </a>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         </section>
+
     );
 }
