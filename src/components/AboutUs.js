@@ -102,7 +102,7 @@ export default function AboutUs({ locale }) {
 
         return (
             <div className="flex-shrink-0">
-                <div className="text-center mb-2 text-lg font-semibold text-gray-700">{member.designation}</div>
+                <div className="text-center mb-2 text-lg font-semibold bg-gray-50 text-gray-700">{member.designation}</div>
                 <div className="bg-white rounded-lg shadow p-4 text-center hover:shadow-md transition">
                     <div className="flex justify-center mb-2">
                         {photo?.url ? (
@@ -120,14 +120,6 @@ export default function AboutUs({ locale }) {
                     <h4 className="text-sm font-medium text-gray-900">{fullName}</h4>
                     <p className="text-xs text-gray-600">{professional?.designation}</p>
                     <p className="text-xs text-gray-500">{professional?.organizationUnit}</p>
-                    {contact?.officialEmail && (
-                        <a
-                            href={`mailto:${contact.officialEmail}`}
-                            className="text-blue-600 text-xs mt-1 block hover:underline"
-                        >
-                            {contact.officialEmail}
-                        </a>
-                    )}
                 </div>
             </div>
         );
@@ -141,19 +133,8 @@ export default function AboutUs({ locale }) {
 
                 {!loading && !error && data?.aboutus?.isVisible && (
                     <>
-                        <h2 className="text-3xl font-bold text-indigo-600 text-center justify-center mb-4 px-2">
-                            {t.aboutTitle}
-                        </h2>
-
-                        <div className="mb-6">
-                            <div
-                                className="text-gray-800 leading-relaxed prose text-xl max-w-none"
-                                dangerouslySetInnerHTML={{ __html: data?.aboutus?.content }}
-                            />
-                        </div>
-
                         {data.aboutus.members?.length > 0 && (
-                            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                            <div className="max-w-7xl mx-auto justify-center items-center px-4 sm:px-6 lg:px-8 py-10">
                                 <h2 className="text-3xl sm:text-3xl font-extrabold text-indigo-700 text-center mb-10">
                                     {t.leadershipTitle}
                                 </h2>
@@ -165,7 +146,7 @@ export default function AboutUs({ locale }) {
                                         .map((member, idx) => (
                                             <div
                                                 key={idx}
-                                                className="bg-white hover:shadow-lg transition-shadow duration-300 ease-in-out"
+                                                className="bg-white hover:shadow-lg rounded-lg transition-shadow duration-300 ease-in-out"
                                             >
                                                 {renderMemberCard(member)}
                                             </div>
@@ -174,6 +155,20 @@ export default function AboutUs({ locale }) {
                             </div>
 
                         )}
+
+                        <div className="mb-6 rounded shadow bg-white p-4">
+                            <h2 className="text-2xl font-bold text-indigo-600 text-center justify-center px-2">
+                                {t.aboutTitle}
+                            </h2>
+
+
+                            <div
+                                className="text-gray-800 leading-relaxed prose text-xm max-w-none"
+                                dangerouslySetInnerHTML={{ __html: data?.aboutus?.content }}
+                            />
+                        </div>
+
+
                     </>
                 )}
             </div>

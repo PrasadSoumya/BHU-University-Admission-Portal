@@ -78,11 +78,11 @@ export default function ProgramDetails({ programType, level, visibleProgramType,
 
     useEffect(() => {
         const GET_PROGRAM_DETAILS_QUERY = `
-            query GetProgramDetails($programmeType: String!, $level: String!, $page: Int!, $pageSize: Int!, $searchTerm: String) {
+            query GetProgramDetails($programmeType: String!, $levels: [String]!, $page: Int!, $pageSize: Int!, $searchTerm: String) {
                 programmes_connection(
                     filters: {
                         programmeType: { eq: $programmeType },
-                        level: { eq: $level },
+                        level: { in: $levels },
                         programmeStatus: { eq: "ACTIVE" },
                         department : { name : { not : { containsi : "Paid Fee Course"} }}
                         or: [
@@ -128,7 +128,7 @@ export default function ProgramDetails({ programType, level, visibleProgramType,
                         query: GET_PROGRAM_DETAILS_QUERY,
                         variables: {
                             programmeType: programType,
-                            level: level,
+                            levels: level === "POSTMASTER" ? ["POSTMASTER", "POSTDOCTORAL"] : [level],
                             page: currentPage,
                             pageSize: itemsPerPage,
                             searchTerm: searchTerm
