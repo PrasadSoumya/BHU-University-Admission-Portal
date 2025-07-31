@@ -154,37 +154,32 @@ export default function NoticeDetails() {
     const dateLocale = locale === "hi-IN" ? "hi-IN" : "en-GB";
 
     return (
-        <div className="p-2 bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen font-sans  text-gray-800">
-            <div className="max-w-full min-h-screen bg-white rounded-xl shadow-2xl p-8">
+        <div className="p-2 bg-gradient-to-br from-blue-50 to-indigo-100 font-sans text-gray-800 flex justify-center ">
+            <div className="max-w-7xl w-full bg-white rounded-xl shadow-2xl p-8">
                 <h1 className="text-3xl font-extrabold text-indigo-800 mb-4">{notice.title}</h1>
-                <p className="text-sm text-gray-600 mb-6 flex flex-wrap gap-x-4 gap-y-2">
-                    <span className="flex items-center text-green-700 font-medium">
-                        <svg
-                            className="w-4 h-4 mr-1"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                        {t.published} {new Date(notice.startDate).toLocaleDateString(dateLocale)}
-                    </span>
-                    {notice.endDate && (
-                        <span className="flex items-center text-red-600 font-medium">
-                            <svg
-                                className="w-4 h-4 mr-1"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+
+                <div className="text-sm text-gray-600 mb-6 flex justify-between items-center flex-wrap">
+                    <div className="flex-1">
+                        <span className="flex items-center text-green-700 font-medium">
+                            {/* Published Icon */}
+                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                             </svg>
-                            {t.expires} {new Date(notice.endDate).toLocaleDateString(dateLocale)}
+                            {t.published} {new Date(notice.startDate).toLocaleDateString(dateLocale)}
                         </span>
+                    </div>
+                    {notice.endDate && (
+                        <div className="flex-1 text-right">
+                            <span className="flex justify-end items-center text-red-600 font-medium">
+                                {/* Expires Icon */}
+                                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                {t.expires} {new Date(notice.endDate).toLocaleDateString(dateLocale)}
+                            </span>
+                        </div>
                     )}
-                </p>
+                </div>
 
                 <div className="prose max-w-none text-gray-700 leading-relaxed mb-8">
                     <div dangerouslySetInnerHTML={{ __html: notice.content }}></div>
@@ -231,7 +226,7 @@ export default function NoticeDetails() {
                     </div>
                 )}
 
-                <div className="flex flex-col justify-end items-center h-full">
+                <div className="flex flex-col  items-center h-full">
                     <button
                         onClick={() => router.push("/")}
                         className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-300 ease-in-out transform hover:scale-105"

@@ -143,7 +143,7 @@ export default function NoticeSection({ locale }) {
     }
 
     return (
-        <section className="p-2 mt-2 font-sans text-gray-800 h-[800px] overflow-y-auto" aria-labelledby="notices-list-heading">
+        <section className="p-2 mt-2 font-sans text-gray-800 h-[700px] overflow-y-auto" aria-labelledby="notices-list-heading">
             <h2 id="notices-list-heading" className="sr-only">Active Notices</h2>
             <div className="space-y-2 max-w-3xl mx-auto">
                 {notices.map((notice) => (

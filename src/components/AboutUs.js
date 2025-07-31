@@ -32,35 +32,36 @@ export default function AboutUs({ locale }) {
 
     useEffect(() => {
         const GET_ABOUTUS_DETAILS_QUERY = `
-        query GetAboutUsDetails($locale: I18NLocaleCode!) {
-            aboutus(locale: $locale) {
-                documentId
-                content
-                isVisible
-                members {
-                    order
-                    designation
-                    employee {
-                        contact {
-                            officialEmail
-                        }
-                        professional {
-                            organizationUnit
-                            designation
-                        }
-                        personal {
-                            title
-                            firstName
-                            middleName
-                            lastName
-                        }
-                        photo {
-                            url
-                        }
-                    }
-                }
-            }
-        }`;
+       query GetAboutUsDetails($locale: I18NLocaleCode!) {
+  aboutus(locale: $locale) {
+    documentId
+    content
+    isVisible
+    members(pagination: { limit: 100 }) {
+      order
+      designation
+      employee {
+        contact {
+          officialEmail
+        }
+        professional {
+          organizationUnit
+          designation
+        }
+        personal {
+          title
+          firstName
+          middleName
+          lastName
+        }
+        photo {
+          url
+        }
+      }
+    }
+  }
+}
+`;
 
         const fetchAboutUsDetails = async () => {
             setLoading(true);
@@ -134,7 +135,7 @@ export default function AboutUs({ locale }) {
                 {!loading && !error && data?.aboutus?.isVisible && (
                     <>
                         {data.aboutus.members?.length > 0 && (
-                            <div className="max-w-7xl mx-auto justify-center items-center px-4 sm:px-6 lg:px-8 py-10">
+                            <div className=" mx-auto justify-center items-center px-4 sm:px-6 lg:px-8 py-10">
                                 <h2 className="text-3xl sm:text-3xl font-extrabold text-indigo-700 text-center mb-10">
                                     {t.leadershipTitle}
                                 </h2>

@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import NoticeSection from './Notices';
 
 export default function AdmissionPortal({ locale = 'en' }) {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -13,20 +14,29 @@ export default function AdmissionPortal({ locale = 'en' }) {
 
     const translations = {
         en: {
-            loading: "Loading banners...",
-            error: "Error loading banner data.",
-            noBanners: "No banners available.",
-            prevSlide: "Previous Slide",
-            nextSlide: "Next Slide",
-            bannerImageAlt: "Banner image for: ",
+            loading: "Loading portal information...",
+            error: "Error loading portal content.",
+            noBanners: "No portal items available.",
+            prevSlide: "Previous",
+            nextSlide: "Next",
+            bannerImageAlt: "Portal item image for: ",
+            notices: "📢 Notices",
+            noticeArchive: "Notice Archive",
+            mainContentLabel: "Main Dashboard Content",
+            noticesSectionLabel: "Notices Section"
         },
         "hi-IN": {
-            loading: "बैनर लोड हो रहे हैं...",
-            error: "बैनर डेटा लोड करने में त्रुटि।",
-            noBanners: "कोई बैनर उपलब्ध नहीं है।",
-            prevSlide: "पिछली स्लाइड",
-            nextSlide: "अगली स्लाइड",
-            bannerImageAlt: "बैनर चित्र इसके लिए: ",
+            loading: "पोर्टल जानकारी लोड हो रही है...",
+            error: "पोर्टल सामग्री लोड करने में त्रुटि।",
+            noBanners: "कोई पोर्टल जानकारी उपलब्ध नहीं है।",
+            prevSlide: "पिछला",
+            nextSlide: "अगला",
+            bannerImageAlt: "पोर्टल आइटम के लिए चित्र: ",
+            notices: "📢 सूचनाएं",
+            noticeArchive: "सूचना संग्रह",
+            mainContentLabel: "मुख्य डैशबोर्ड सामग्री",
+            noticesSectionLabel: "सूचनाएं अनुभाग"
+
         }
     };
 
@@ -154,28 +164,57 @@ export default function AdmissionPortal({ locale = 'en' }) {
     }
 
     return (
-        <section className="bg-gradient-to-b from-slate-500 to-slate-600 py-8 px-4">
-            <div className="flex justify-center">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
-                    {banners?.map((item, index) => (
-                        <div
-                            key={index}
-                            className="bg-white shadow-lg rounded-xl p-4 flex flex-col items-center justify-between text-center transition-transform transform hover:-translate-y-1 hover:shadow-xl"
-                        >
-                            <p className="text-base font-semibold text-gray-800 mb-3">{item.title}</p>
-                            <div className="mt-auto">
-                                <a
-                                    href={item.buttonUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-full transition duration-300"
+        <section className="bg-gradient-to-b from-slate-500 to-slate-600 py-2 px-2">
+            <div className="flex flex-col lg:flex-row gap-6 items-start">
+                {/* Left: Banner Grid */}
+                <div className="w-full lg:w-2/3">
+                    <div className=" overflow-auto">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-2">
+                            {banners?.map((item, index) => (
+                                <div
+                                    key={index}
+                                    className="bg-white shadow-lg rounded-xl p-4 flex flex-col items-center justify-between text-center h-36 transition-transform transform hover:-translate-y-1 hover:shadow-xl"
                                 >
-                                    {item.buttonText}
-                                </a>
-                            </div>
+                                    <p className="text-base font-semibold text-gray-800 mb-3">{item.title}</p>
+                                    <div className="mt-auto">
+                                        <a
+                                            href={item.buttonUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-full transition duration-300"
+                                        >
+                                            {item.buttonText}
+                                        </a>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    </div>
                 </div>
+
+                {/* Right: Notice Section */}
+                <aside
+                    className="w-full lg:w-1/3 h-[600px] flex flex-col"
+                    aria-label={t.noticesSectionLabel}
+                >
+                    <div className="bg-gray-200 border border-orange-200 rounded-lg shadow p-2 h-full flex flex-col">
+                        <div className="flex items-center justify-between mb-4">
+                            <h2 className="text-xl font-bold text-orange-600" id="notices-heading">
+                                {t.notices}
+                            </h2>
+                            <a
+                                href={`/${locale}/archives`}
+                                target="_blank"
+                                className="bg-indigo-600 text-white px-4 py-2 rounded-md font-medium shadow hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                aria-label={`${t.noticeArchive} (opens in new tab)`}
+                                rel="noopener noreferrer"
+                            >
+                                📁 {t.noticeArchive}
+                            </a>
+                        </div>
+                        <NoticeSection locale={locale} />
+                    </div>
+                </aside>
             </div>
         </section>
 

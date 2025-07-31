@@ -207,7 +207,7 @@ export default function Navbar({ locale }) {
                     </div>
 
                     <div className="hidden md:flex flex-col flex-grow space-y-1 w-full">
-                        <div className="flex justify-end items-center gap-1.5 h-6 flex-wrap text-sm">
+                        <div className="flex justify-end items-center gap-1.5 flex-wrap text-sm">
                             {/* Visit BHU Website */}
                             <a
                                 href="https://bhu.ac.in"
@@ -220,23 +220,18 @@ export default function Navbar({ locale }) {
                                 {t.visitBHU}
                             </a>
 
-                            {/* Language Switch */}
-                            {['en', 'hi-IN'].map((lang) => (
-                                <button
-                                    key={lang}
-                                    onClick={() => handleLanguageChange(lang)}
-                                    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded border text-xs font-medium transition ${locale === lang
-                                        ? 'bg-blue-600 text-white border-blue-700 shadow focus:ring-blue-500'
-                                        : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
-                                        } focus:outline-none focus:ring-2 focus:ring-offset-2`}
-                                    aria-label={lang === 'en' ? t.english : t.hindi}
-                                >
-                                    <MdLanguage className="text-sm" />
-                                    {lang === 'en' ? t.english : t.hindi}
-                                </button>
-                            ))}
+                            <button
+                                onClick={() => handleLanguageChange(locale === 'en' ? 'hi-IN' : 'en')}
+                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded border text-xs font-medium transition bg-white text-gray-700 border-gray-300 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                                aria-label={`Switch to ${locale === 'en' ? t.hindi : t.english}`}
+                                title={`Switch to ${locale === 'en' ? t.hindi : t.english}`}
+                            >
+                                <MdLanguage className="text-sm" />
+                                {locale === 'en' ? t.english : t.hindi}
+                            </button>
 
-                            {/* Font Size Controls */}
+
+                          
                             {[{ icon: <FaMinus />, action: decreaseFontSize, label: t.smaller },
                             { icon: <BiReset />, action: resetFontSize, label: t.reset },
                             { icon: <FaPlus />, action: increaseFontSize, label: t.larger }]
@@ -252,7 +247,6 @@ export default function Navbar({ locale }) {
                                     </button>
                                 ))}
 
-                            {/* Screen Reader */}
                             <button
                                 onClick={activateScreenReader}
                                 className="inline-flex items-center gap-1 px-1.5  py-0.5 text-xs bg-white order border-gray-300 rounded text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
@@ -260,7 +254,6 @@ export default function Navbar({ locale }) {
                                 aria-label="Screen Reader Instructions"
                             >
                                 <FaVideo className="text-sm" />
-                                <span className="hidden lg:inline">Screen Reader</span>
                             </button>
                         </div>
 
@@ -315,12 +308,28 @@ export default function Navbar({ locale }) {
                                 >
                                     {t.visitBHU}
                                 </a>
-                                <button onClick={() => handleLanguageChange('en')} className={`px-3 py-1.5 rounded border ${locale === 'en' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'}`}>{t.english}</button>
-                                <button onClick={() => handleLanguageChange('hi-IN')} className={`px-3 py-1.5 rounded border ${locale === 'hi-IN' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'}`}>{t.hindi}</button>
+                                <button
+                                    onClick={() => handleLanguageChange(locale === 'en' ? 'hi-IN' : 'en')}
+                                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded border bg-white text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                                    title={`Switch to ${locale === 'en' ? 'Hi' : 'En'}`}
+                                    aria-label={`Switch to ${locale === 'en' ? 'Hi' : 'En'}`}
+                                >
+                                    <MdLanguage className="text-lg" />
+                                    {locale === 'en' ? 'En' : 'Hi'}
+                                </button>
+
+
                                 <button onClick={decreaseFontSize} className="p-2 border rounded bg-white"><FaMinus /></button>
                                 <button onClick={resetFontSize} className="p-2 border rounded bg-white"><BiReset /></button>
                                 <button onClick={increaseFontSize} className="p-2 border rounded bg-white"><FaPlus /></button>
-                                <button onClick={activateScreenReader} className="p-2 border rounded bg-white"><FaVideo /></button>
+                                <button
+                                    onClick={activateScreenReader}
+                                    className="p-2 border rounded bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                                    title="Screen Reader Instructions"
+                                    aria-label="Screen Reader Instructions"
+                                >
+                                    <FaVideo className="text-lg" />
+                                </button>
                             </div>
                         </div>
                     )}

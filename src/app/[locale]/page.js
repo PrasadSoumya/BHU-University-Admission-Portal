@@ -7,18 +7,20 @@ import ScrollToTopButton from "@/components/ScrollToTopButton";
 import AlbumGallery from "@/components/ImageGallery";
 import AdmissionPortal from "@/components/AdmissionPortal";
 
-export default async  function Home({ params }) {
+export default async function Home({ params }) {
   const locale = (await params).locale;
-  
+
 
   return (
     <div className="">
       <BannerCarousel locale={locale} />
       <Announcement locale={locale} />
-      <AdmissionPortal locale={locale}></AdmissionPortal>
-      <Dashboard locale={locale} />
-      <Sidebar locale={locale} />
-      <AlbumGallery locale={locale}></AlbumGallery>
+      <main>
+        <AdmissionPortal locale={locale}></AdmissionPortal>
+        <Dashboard locale={locale} />
+        <Sidebar locale={locale} />
+        <AlbumGallery locale={locale}></AlbumGallery>
+      </main>
       <ScrollToTopButton></ScrollToTopButton>
     </div>
   );
