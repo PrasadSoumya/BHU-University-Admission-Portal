@@ -57,7 +57,7 @@ export default function NoticeDetails() {
 
         const GET_SINGLE_NOTICE_QUERY = `
           query GetSingleNotice($documentId: ID!, $locale : String!) {
-            admissionNotices_connection(filters: { documentId: { eq: $documentId }, locale : {eq : $locale} }) {
+            admissionNotices_connection(filters: { documentId: { eq: $documentId }, locale : {eq : $locale} },pagination: { limit: 1000 }) {
               nodes {
                 documentId
                 title
@@ -156,7 +156,7 @@ export default function NoticeDetails() {
     return (
         <div className="p-2 bg-gradient-to-br from-blue-50 to-indigo-100 font-sans text-gray-800 flex justify-center ">
             <div className="max-w-7xl w-full bg-white rounded-xl shadow-2xl p-8">
-                <h1 className="text-3xl font-extrabold text-indigo-800 mb-4">{notice.title}</h1>
+                <h1 className="text-2xl font-extrabold text-indigo-800 mb-4">{notice.title}</h1>
 
                 <div className="text-sm text-gray-600 mb-6 flex justify-between items-center flex-wrap">
                     <div className="flex-1">
@@ -187,7 +187,7 @@ export default function NoticeDetails() {
 
                 {notice.links && notice.links.filter(link => link.isVisible).length > 0 && (
                     <div className="mb-8">
-                        <h3 className="text-2xl font-bold text-indigo-700 mb-4">{t.relevantLinks}</h3>
+                        <h3 className="text-xl font-bold text-indigo-700 mb-4">{t.relevantLinks}</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             {notice.links.filter(link => link.isVisible).map((link, index) => {
                                 const href = link.enums === 'attachment'
