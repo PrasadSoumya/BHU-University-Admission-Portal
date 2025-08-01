@@ -16,7 +16,7 @@ export default function RecentEvent({ locale }) {
       loading: "🔄 Loading events...",
       error: "⚠️ Failed to load events.",
       noEvents: "📅 No events available.",
-      activities: "Activities",
+      activities: "University Activities",
       viewMore: "View More",
     },
     "hi-IN": {
